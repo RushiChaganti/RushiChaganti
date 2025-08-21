@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Volume2, VolumeX } from "lucide-react"
+import { getAssetPath } from "@/lib/utils"
 
 export function MusicToggle() {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -56,7 +57,7 @@ export function MusicToggle() {
         ref={audioRef}
         loop
         preload="auto"
-        src="/music/Bink_sake.mp3" 
+        src={getAssetPath('/music/Bink_sake.mp3')}
       />
       
       <Button 

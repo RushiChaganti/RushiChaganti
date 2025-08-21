@@ -9,6 +9,7 @@ import { BuildsSection } from "@/components/builds-section"
 import { LogsSection } from "@/components/logs-section"
 import { StartupAnimation } from "@/components/startup-animation"
 import { portfolioData } from "@/lib/portfolio-data"
+import { getAssetPath } from "@/lib/utils"
 import Image from 'next/image'
 
 export default function Home() {
@@ -165,15 +166,24 @@ export default function Home() {
           {/* Right Content - Brook Image */}
          {activeSection === "home" && (
           <div className="lg:col-span-1 flex justify-center lg:justify-start">
-            <div className="sticky top-8">
-              <Image
-                src="/Brook.jpg"
-                alt="Brook character"
-                width={128}
-                height={128}
-                priority
-                className="object-contain w-24 h-24 sm:w-32 sm:h-32"
-              />
+            <div className="sticky top-8 group cursor-pointer">
+              <div className="relative w-24 h-24 sm:w-32 sm:h-32">
+                <Image
+                  src={getAssetPath('/Brook.jpg')}
+                  alt="Brook character"
+                  width={128}
+                  height={128}
+                  priority
+                  className="object-contain w-full h-full transition-opacity duration-300 group-hover:opacity-0"
+                />
+                <Image
+                  src={getAssetPath('/me.jpg')}
+                  alt="Rushi Chaganti"
+                  width={128}
+                  height={128}
+                  className="object-contain w-full h-full absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+              </div>
             </div>
           </div>
         )}
