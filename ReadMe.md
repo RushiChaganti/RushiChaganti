@@ -1,44 +1,36 @@
-<div align="center">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# 🔥 RUSHI CHAGANTI 🔥
+## Getting Started
 
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
-████████╗██╗  ██╗███████╗    ██████╗ ██╗   ██╗██╗██╗     ██████╗ ███████╗██████╗
-╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██║   ██║██║██║     ██╔══██╗██╔════╝██╔══██╗
-   ██║   ███████║█████╗      ██████╔╝██║   ██║██║██║     ██║  ██║█████╗  ██████╔╝
-   ██║   ██╔══██║██╔══╝      ██╔══██╗██║   ██║██║██║     ██║  ██║██╔══╝  ██╔══██╗
-   ██║   ██║  ██║███████╗    ██████╔╝╚██████╔╝██║███████╗██████╔╝███████╗██║  ██║
-   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-```
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=40&pause=1000&color=00D9FF&center=true&vCenter=true&width=800&lines=Security+Researcher;Open+Source+Builder;AI+%26+LLM+Explorer;Bug+Bounty+Hunter" alt="Typing SVG" />
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-</div>
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-<div align="center">
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## 🚀 CURRENT PROJECTS 🚀
+## Learn More
 
-**🏗️ Building [Araise25](https://github.com/Araise25/) - The Future of Software Installation**
+To learn more about Next.js, take a look at the following resources:
 
-*Making software accessibility universal across all operating systems*
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-[![Araise25](https://img.shields.io/badge/🌟_Araise25-Visit_Organization-FF4081?style=for-the-badge)](https://github.com/Araise25/)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-</div>
+## Deploy on Vercel
 
-<div align="center">
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Tech Stack
-![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-
-![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white) ![LLM](https://img.shields.io/badge/LLM-FF6B35?style=for-the-badge&logo=openai&logoColor=white)
-
-</div>
-
-<div align="center">
-
-## Connect
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/rushichaganti) [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/@Rushichaganti)
-
-</div>
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Twitter, ExternalLink, Search } from "lucide-react"
+import { Github, Linkedin, X, ExternalLink, Search, Mail } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { MusicToggle } from "@/components/music-toggle"
 import { BuildsSection } from "@/components/builds-section"
@@ -103,17 +103,22 @@ export default function Home() {
                   </Button>
                   <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
                     <a href={portfolioData.links.email}>
-                      <Github className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
                     </a>
                   </Button>
                   <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
                     <a href={portfolioData.links.github} target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <Github className="h-3 w-3 sm:h-4 sm:w-4" />
                     </a>
                   </Button>
                   <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
                     <a href={portfolioData.links.linkedin} target="_blank" rel="noopener noreferrer">
-                      <Twitter className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <Linkedin className="h-3 w-3 sm:h-4 sm:w-4" />
+                    </a>
+                  </Button>
+                  <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
+                    <a href={portfolioData.links.twitter} target="_blank" rel="noopener noreferrer">
+                      <X className="h-3 w-3 sm:h-4 sm:w-4" />
                     </a>
                   </Button>
                 </div>
