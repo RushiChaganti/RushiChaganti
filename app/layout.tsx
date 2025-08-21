@@ -7,6 +7,11 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "Rushi Chaganti- Portfolio",
   description: "Turning ideas into experiences, one project at a time.",
+  icons: {
+    icon: '/bat.png',
+    shortcut: '/bat.png',
+    apple: '/bat.png',
+  },
 }
 
 export const viewport = {

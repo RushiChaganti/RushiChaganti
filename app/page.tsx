@@ -27,7 +27,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="bg-card border-b border-border">
-        <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 max-w-6xl mx-auto gap-4 sm:gap-0">
+        <div className="flex items-center justify-center px-4 sm:px-6 py-3 max-w-6xl mx-auto">
           <div className="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-base">
             <button
               onClick={() => setActiveSection("home")}
@@ -59,16 +59,16 @@ export default function Home() {
             >
               Log
             </button>
-          </div>
-          <div className="flex items-center space-x-1 sm:space-x-2">
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9">
-              <Search className="h-3 w-3 sm:h-4 sm:w-4" />
-            </Button>
-            <div className="text-muted-foreground">
-              <MusicToggle />
-            </div>
-            <div className="text-muted-foreground">
-              <ThemeToggle />
+            <div className="flex items-center space-x-1 sm:space-x-2 ml-4 sm:ml-8">
+              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9">
+                <Search className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
+              <div className="text-muted-foreground">
+                <MusicToggle />
+              </div>
+              <div className="text-muted-foreground">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
         </div>
