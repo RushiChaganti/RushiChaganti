@@ -114,6 +114,18 @@ export const portfolioData: PortfolioData = {
   },
   logs: [
     {
+      date: "2025-08-20",
+      title: "Building Personal Portfolio",
+      content:
+        "Created a modern portfolio website with Next.js, featuring dynamic logs, GitHub integration, and chess game tracking. Implemented responsive design with Tailwind CSS.",
+    },
+    {
+      date: "2025-08-15",
+      title: "Exploring AI Agent Development",
+      content:
+        "Deep diving into autonomous agent architectures and multi-modal AI systems. Working on improving reasoning capabilities and tool usage patterns.",
+    },
+    {
       date: "2025-02-15",
       title: "Automating Recruitment Workflows",
       content:
@@ -125,7 +137,6 @@ export const portfolioData: PortfolioData = {
       content:
         "Implemented Pinecone-backed data retrieval for multi-modal projects, ensuring faster semantic search performance.",
     },
-
   ],
   links: {
     cv: "https://drive.google.com/file/d/1dzEZl3d3eIzGTW5uXf8jiYIYySe9B2r9/view?usp=sharing",
