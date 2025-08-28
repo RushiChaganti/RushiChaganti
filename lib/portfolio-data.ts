@@ -84,6 +84,15 @@ export const portfolioData: PortfolioData = {
         githubLink: "https://github.com/RushiChaganti/Metro-Portfolio",
         link: "https://rushichaganti.github.io/Metro-Portfolio/",
       },
+      {
+        id: 13,
+        title: "NeuralSim",
+        description:
+          "Neural Networks through interactive, real-time simulations. ",
+        tech: ["TypeScript", "Next.js", "Tailwind CSS"],
+        githubLink: "https://github.com/RushiChaganti/NeuralSim",
+        link: "https://rushichaganti.github.io/NeuralSim//",
+      },
     ],
     Python: [
       {
