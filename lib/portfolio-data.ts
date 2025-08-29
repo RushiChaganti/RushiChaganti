@@ -27,6 +27,15 @@ export const portfolioData: PortfolioData = {
         tech: ["Python", "Multi-modal AI", "LLMs"],
         githubLink: "https://github.com/RushiChaganti/Multi_modal_Doc_QA_system",
       }
+       {
+        id: 14,
+        title: "LightRAG",
+        description:
+          "A Forked Repo of Light RAG, Contributed a feature for exporting the RAG data.",
+        tech: ["Python", "RAG", "LLMs"],
+        githubLink: "https://github.com/HKUDS/LightRAG",
+        oss: true,
+      }
     ],
     ML: [
       {
