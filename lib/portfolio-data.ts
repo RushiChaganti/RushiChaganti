@@ -26,8 +26,8 @@ export const portfolioData: PortfolioData = {
           "A Python-based multi-modal document QA system—query documents using a variety of inputs (text, images, etc.).",
         tech: ["Python", "Multi-modal AI", "LLMs"],
         githubLink: "https://github.com/RushiChaganti/Multi_modal_Doc_QA_system",
-      }
-       {
+      },
+      {
         id: 14,
         title: "LightRAG",
         description:
@@ -131,6 +131,18 @@ export const portfolioData: PortfolioData = {
     ],
   },
   logs: [
+    {
+      date: "2025-08-24",
+      title: "Building NeuralSim",
+      content:
+        "Created a modern website, Neural Networks through interactive, real-time simulations",
+    },
+    {
+      date: "2025-08-17",
+      title: "Building Biogrofe",
+      content:
+        "Created a modern  platform aiding students with job application details across 100+ companies.",
+    },
     {
       date: "2025-08-20",
       title: "Building Personal Portfolio",
