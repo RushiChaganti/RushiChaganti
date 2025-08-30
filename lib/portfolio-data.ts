@@ -55,6 +55,7 @@ export const portfolioData: PortfolioData = {
         githubLink: "https://github.com/RushiChaganti/FaceRecognition",
       },
     ],
+   
     Automation: [
       {
         id: 6,
@@ -129,6 +130,30 @@ export const portfolioData: PortfolioData = {
         tech: ["Python", "CLI Game"],
         githubLink: "https://github.com/RushiChaganti/HangmanCli",
       },
+    ],
+  
+    Extensions: [
+      {
+        id: 14,
+        title: "Utility_Kit",
+        description:
+          "Extension which clears 1 minute of history — as if it was never opened.(Stealth name 😅)",
+        tech: ["HTML", "Javascript"],
+        githubLink: "https://github.com/RushiChaganti/Utility_Kit/",
+      },
+    ],
+    
+    Security: [
+      {
+        id: 15,
+        title: "system-prompts-and-models-of-ai-tools",
+        description:
+          "Added Augument Code System Prompt",
+        tech: ["AI Prompt Injection", "AI Red Teaming"],
+        githubLink: "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools",
+        oss: true,
+      },
+
     ],
   },
   logs: [

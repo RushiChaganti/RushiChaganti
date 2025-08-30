@@ -31,6 +31,8 @@ export interface PortfolioData {
     Automation: Build[];
     Web: Build[];
     Python: Build[];
+    Extensions: Build[];
+    Security: Build[];
   };
   logs: Log[];
   links: Links;
