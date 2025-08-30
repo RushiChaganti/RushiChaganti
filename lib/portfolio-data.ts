@@ -83,6 +83,7 @@ export const portfolioData: PortfolioData = {
           "Collaborated with biotech peers to build a platform aiding students with job application details across 100+ companies.",
         tech: ["React", "Node.js"],
         githubLink: "https://github.com/RushiChaganti",
+        link: "https://rushichaganti.github.io/Biogrofe/",
       },
       {
         id: 9,
