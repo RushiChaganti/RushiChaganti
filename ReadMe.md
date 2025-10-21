@@ -11,7 +11,7 @@
 
 ## CURRENT PROJECTS 
 
-** Building [Araise25](https://github.com/Araise25/) - The Future of Software Installation**
+**Building [Araise25](https://github.com/Araise25/) - The Future of Software Installation**
 
 *Making software accessibility universal across all operating systems*
 
