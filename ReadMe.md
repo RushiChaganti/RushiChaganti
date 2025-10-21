@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔥 RUSHI CHAGANTI 🔥
+# RUSHI CHAGANTI 
 
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=40&pause=1000&color=00D9FF&center=true&vCenter=true&width=800&lines=Security+Researcher;Open+Source+Builder;AI+%26+LLM+Explorer;Bug+Bounty+Hunter" alt="Typing SVG" />
@@ -9,9 +9,9 @@
 
 <div align="center">
 
-## 🚀 CURRENT PROJECTS 🚀
+## CURRENT PROJECTS 
 
-**🏗️ Building [Araise25](https://github.com/Araise25/) - The Future of Software Installation**
+** Building [Araise25](https://github.com/Araise25/) - The Future of Software Installation**
 
 *Making software accessibility universal across all operating systems*
 
