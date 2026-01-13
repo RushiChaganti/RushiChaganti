@@ -195,7 +195,7 @@ export const portfolioData: PortfolioData = {
     },
   ],
   links: {
-    cv: "https://drive.google.com/file/d/1dzEZl3d3eIzGTW5uXf8jiYIYySe9B2r9/view?usp=sharing",
+    cv: "https://drive.google.com/file/d/1VGysYKJ6cl8pm54SaTj6uOWDMMvy4tlH/view?usp=sharing",
     email: "mailto:rushichaganti@gmail.com",
     github: "https://github.com/RushiChaganti",
     linkedin: "https://www.linkedin.com/in/rushichaganti/",
