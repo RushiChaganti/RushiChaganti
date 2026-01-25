@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, X, ExternalLink, Search, Mail } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -11,10 +11,33 @@ import { WorkSection } from "@/components/work-section"
 import { portfolioData } from "@/lib/portfolio-data"
 import { getAssetPath } from "@/lib/utils"
 import Image from 'next/image'
+import { SearchDialog } from "@/components/search-dialog"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"home" | "builds" | "work">("home")
   const [showStartup, setShowStartup] = useState(true)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [highlightedWorkId, setHighlightedWorkId] = useState<number | null>(null)
+
+  const handleNavigation = (section: "home" | "builds" | "work", id?: number) => {
+    setActiveSection(section)
+    if (id) {
+      setHighlightedWorkId(id)
+      // Reset highlight after animation
+      setTimeout(() => setHighlightedWorkId(null), 2000)
+    }
+  }
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setIsSearchOpen((open) => !open)
+      }
+    }
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
 
   const handleStartupComplete = () => {
     setShowStartup(false)
@@ -51,9 +74,18 @@ export default function Home() {
               Builds
             </button>
             <div className="flex items-center space-x-1 sm:space-x-2 ml-4 sm:ml-8">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9"
+                onClick={() => setIsSearchOpen(true)}
+                title="Search (Ctrl+K)"
+              >
                 <Search className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
+              <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 ml-1">
+                <span className="text-xs">⌘K</span>
+              </kbd>
 
               <div className="text-muted-foreground">
                 <ThemeToggle />
@@ -153,7 +185,7 @@ export default function Home() {
 
 
 
-            {activeSection === "work" && <WorkSection />}
+            {activeSection === "work" && <WorkSection highlightedId={highlightedWorkId} />}
           </div>
 
           {/* Right Content - Brook Image */}
@@ -196,6 +228,11 @@ export default function Home() {
 
         </div>
       </footer>
+      <SearchDialog
+        open={isSearchOpen}
+        onOpenChange={setIsSearchOpen}
+        onNavigateToSection={handleNavigation}
+      />
     </div>
   )
 }

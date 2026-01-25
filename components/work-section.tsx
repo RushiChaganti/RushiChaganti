@@ -5,8 +5,17 @@ import { getAssetPath } from "@/lib/utils"
 import Image from "next/image"
 import { Briefcase } from "lucide-react"
 
-export function WorkSection({ onViewAll, limit }: { onViewAll?: () => void; limit?: number }) {
+import { useEffect, useRef } from "react"
+
+export function WorkSection({ onViewAll, limit, highlightedId }: { onViewAll?: () => void; limit?: number; highlightedId?: number | null }) {
     const workData = limit ? portfolioData.work.slice(0, limit) : portfolioData.work;
+    const itemRefs = useRef<{ [key: number]: HTMLDivElement | null }>({})
+
+    useEffect(() => {
+        if (highlightedId && itemRefs.current[highlightedId]) {
+            itemRefs.current[highlightedId]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+    }, [highlightedId])
 
     return (
         <div className="space-y-4 sm:space-y-6">
@@ -24,7 +33,13 @@ export function WorkSection({ onViewAll, limit }: { onViewAll?: () => void; limi
                 {workData.map((exp) => (
                     <div
                         key={exp.id}
-                        className="group relative flex flex-col p-4 rounded-xl bg-card/50 border border-border/50 hover:bg-card hover:border-border transition-all duration-300"
+                        ref={el => {
+                            if (el) itemRefs.current[exp.id] = el
+                        }}
+                        className={`group relative flex flex-col p-4 rounded-xl border transition-all duration-500 ${highlightedId === exp.id
+                                ? "bg-accent/20 border-primary shadow-[0_0_15px_rgba(var(--primary),0.3)] scale-[1.02]"
+                                : "bg-card/50 border-border/50 hover:bg-card hover:border-border"
+                            }`}
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-4">

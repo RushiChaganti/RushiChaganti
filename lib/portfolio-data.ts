@@ -174,7 +174,7 @@ export const portfolioData: PortfolioData = {
         description: "Official website for the Araise organization, showcasing projects and tools.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/Araise25/araise_Web",
-        link: "https://araise25.github.io/arAIse_Web/",
+        link: "https://araise25.github.io/araise_Web/",
       }
     ],
     Python: [
