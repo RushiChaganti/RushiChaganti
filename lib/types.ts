@@ -8,6 +8,7 @@ export interface Build {
   link?: string;
   demo?: string;
   oss?: boolean;
+  firefoxLink?: string;
 }
 
 export interface Log {
@@ -24,13 +25,25 @@ export interface Links {
   twitter: string;
 }
 
+export interface WorkExperience {
+  id: number;
+  company: string;
+  role: string;
+  period: string;
+  description: string[];
+  type?: string;
+  logo?: string;
+}
+
 export interface PortfolioData {
+  work: WorkExperience[];
   builds: {
     GenAI: Build[];
     ML: Build[];
     Automation: Build[];
     Web: Build[];
     Python: Build[];
+    Bash: Build[];
     Extensions: Build[];
     Security: Build[];
   };

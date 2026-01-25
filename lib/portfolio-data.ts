@@ -1,6 +1,55 @@
 import { PortfolioData } from './types';
 
 export const portfolioData: PortfolioData = {
+  work: [
+    {
+      id: 1,
+      company: "Gumbel AI",
+      role: "NLP Engineer",
+      period: "03/25 - 04/25",
+      description: [
+        "RAG System Evaluation & Model Development: Tested and evaluated multiple RAG systems, developing models using RAFT, Light RAG, and Graph RAG to enhance retrieval-augmented generation performance."
+      ],
+      type: "Internship"
+    },
+    {
+      id: 2,
+      company: "Say Apps",
+      role: "R&D Intern",
+      period: "10/24 - 02/25",
+      description: [
+        "ChatGPT-Powered Telegram Bot: Developed an automated YouTube transcript summarization tool using Selenium, cutting down manual workload.",
+        "Web Scraping & Content Generation: Utilized Selenium and custom agents to extract and process data from platforms like X and LinkedIn, significantly enhancing content creation.",
+        "Multi-Modal User Interaction: Implemented voice-to-post functionality with Whisper and a dual-LLM “Truth Terminal” for dynamic user interactions.",
+        "Data Management for RAG: Optimized data retrieval using a Pinecone database to ensure rapid access and improved performance"
+      ],
+      type: "Internship"
+    },
+    {
+      id: 3,
+      company: "Referso",
+      role: "R&D Intern",
+      period: "10/24 - 02/25",
+      description: [
+        "Automated Workday Careers: Developed Selenium-based automation to optimize recruitment workflows, reducing manual processing time by significant margins.",
+        "Enhanced Workable Platform: Designed and implemented robust Playwright scripts to improve candidate management efficiency and process reliability.",
+        "Browser Agent-Driven Website Automation: Engineered intelligent automation agents to streamline website operations and maximize efficiency."
+      ],
+      type: "Freelance"
+    },
+    {
+      id: 4,
+      company: "Wictronix",
+      role: "AI / ML Engineer Intern",
+      period: "07/23 - 08/23",
+      description: [
+        "Vehicle Image Annotation & YOLOv8 Integration: Led the annotation of 10,000+ images across diverse vehicle types to enhance object detection accuracy.",
+        "Optimized Annotation Workflow: Developed a YOLOv8-compatible format that streamlined the annotation process and boosted efficiency.",
+        "Improved Object Detection: Delivered high-quality, precisely labeled datasets, significantly increasing model recognition performance."
+      ],
+      type: "Internship"
+    }
+  ],
   builds: {
     GenAI: [
       {
@@ -35,6 +84,13 @@ export const portfolioData: PortfolioData = {
         tech: ["Python", "RAG", "LLMs"],
         githubLink: "https://github.com/HKUDS/LightRAG",
         oss: true,
+      },
+      {
+        id: 16,
+        title: "Medical-Advisor-Chatbot",
+        description: "A Python-based medical advisor chatbot using NLP to provide health-related guidance.",
+        tech: ["Python", "NLP", "Chatbots"],
+        githubLink: "https://github.com/RushiChaganti/Medical-Advisor-Chatbot",
       }
     ],
     ML: [
@@ -55,7 +111,7 @@ export const portfolioData: PortfolioData = {
         githubLink: "https://github.com/RushiChaganti/FaceRecognition",
       },
     ],
-   
+
     Automation: [
       {
         id: 6,
@@ -104,6 +160,22 @@ export const portfolioData: PortfolioData = {
         githubLink: "https://github.com/RushiChaganti/NeuralSim",
         link: "https://rushichaganti.github.io/NeuralSim//",
       },
+      {
+        id: 17,
+        title: "Release-Check",
+        description: "Validate tech experience and stack compatibility for developers.",
+        tech: ["TypeScript", "Next.js", "Tailwind CSS"],
+        githubLink: "https://github.com/Araise25/Release-Check",
+        link: "https://araise25.github.io/Release-Check/",
+      },
+      {
+        id: 18,
+        title: "araise_Web",
+        description: "Official website for the Araise organization, showcasing projects and tools.",
+        tech: ["TypeScript", "Next.js", "Tailwind CSS"],
+        githubLink: "https://github.com/Araise25/araise_Web",
+        link: "https://araise25.github.io/arAIse_Web/",
+      }
     ],
     Python: [
       {
@@ -131,7 +203,37 @@ export const portfolioData: PortfolioData = {
         githubLink: "https://github.com/RushiChaganti/HangmanCli",
       },
     ],
-  
+    Bash: [
+      {
+        id: 19,
+        title: "WTF-Tools",
+        description: "Collection of shell scripts to boost developer workflow and automation.",
+        tech: ["Shell", "Bash"],
+        githubLink: "https://github.com/Araise25/WTF-Tools",
+      },
+      {
+        id: 20,
+        title: "psutils",
+        description: "A collection of command line utilities written in PowerShell for system management.",
+        tech: ["PowerShell", "CLI Tools"],
+        githubLink: "https://github.com/RushiChaganti/psutils",
+      },
+      {
+        id: 21,
+        title: "Araise_PM",
+        description: "Project management and automation scripts for the Araise organization.",
+        tech: ["Shell", "Bash"],
+        githubLink: "https://github.com/Araise25/Araise_PM",
+      },
+      {
+        id: 24,
+        title: "Release-Check-DB",
+        description: "A clean, community-maintained metadata repository for tech stacks and developer tools.",
+        tech: ["Metadata", "JSON"],
+        githubLink: "https://github.com/Araise25/Release-Check-DB",
+      }
+    ],
+
     Extensions: [
       {
         id: 14,
@@ -140,9 +242,25 @@ export const portfolioData: PortfolioData = {
           "Extension which clears 1 minute of history — as if it was never opened.(Stealth name 😅)",
         tech: ["HTML", "Javascript"],
         githubLink: "https://github.com/RushiChaganti/Utility_Kit/",
+        firefoxLink: "https://addons.mozilla.org/en-US/firefox/addon/utility-kit/",
       },
+      {
+        id: 22,
+        title: "YSB",
+        description: "Youtube Shorts Blocker for Firefox - clean up your feed.",
+        tech: ["JavaScript", "Web Extensions"],
+        githubLink: "https://github.com/Araise25/YSB",
+        firefoxLink: "https://addons.mozilla.org/en-US/firefox/addon/ysb/",
+      },
+      {
+        id: 23,
+        title: "seezo-extension",
+        description: "Browser extension for enhanced data visualization and interaction.",
+        tech: ["Python", "JavaScript"],
+        githubLink: "https://github.com/RushiChaganti/seezo-extension",
+      }
     ],
-    
+
     Security: [
       {
         id: 15,
