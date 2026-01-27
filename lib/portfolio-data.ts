@@ -56,7 +56,7 @@ export const portfolioData: PortfolioData = {
         id: 1,
         title: "DocuTalk",
         description:
-          "Streamlit app for querying documents (PDF/DOCX/PPTX) using LangChain and Ollama.",
+          "Streamlit app for querying docs (PDF/DOCX/PPTX) via natural language. Runs entirely local with Ollama—no API keys or cloud dependencies.",
         tech: ["Python", "Streamlit", "LangChain", "Ollama"],
         githubLink: "https://github.com/RushiChaganti/DocuTalk",
       },
@@ -64,7 +64,7 @@ export const portfolioData: PortfolioData = {
         id: 2,
         title: "docqa-ai",
         description:
-          "Document-QA toolkit built in Python for querying and retrieving answers from long-form content.",
+          "Python toolkit for extracting answers from long-form documents. Built to handle chunking and retrieval without relying on external APIs.",
         tech: ["Python", "LangChain", "QA Systems"],
         githubLink: "https://github.com/RushiChaganti/docqa-ai",
       },
@@ -72,7 +72,7 @@ export const portfolioData: PortfolioData = {
         id: 3,
         title: "Multi_modal_Doc_QA_system",
         description:
-          "A Python-based multi-modal document QA system—query documents using a variety of inputs (text, images, etc.).",
+          "Document QA system that accepts text and image inputs. Handles the tricky part of unifying embeddings across modalities for consistent retrieval.",
         tech: ["Python", "Multi-modal AI", "LLMs"],
         githubLink: "https://github.com/RushiChaganti/Multi_modal_Doc_QA_system",
       },
@@ -80,7 +80,7 @@ export const portfolioData: PortfolioData = {
         id: 14,
         title: "LightRAG",
         description:
-          "A Forked Repo of Light RAG, Contributed a feature for exporting the RAG data.",
+          "Contributed data export functionality to LightRAG. PR merged—enables users to persist and migrate their RAG graphs.",
         tech: ["Python", "RAG", "LLMs"],
         githubLink: "https://github.com/HKUDS/LightRAG",
         oss: true,
@@ -88,7 +88,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 16,
         title: "Medical-Advisor-Chatbot",
-        description: "A Python-based medical advisor chatbot using NLP to provide health-related guidance.",
+        description: "NLP chatbot for health-related guidance. Focused on intent classification to route user queries to appropriate response templates safely.",
         tech: ["Python", "NLP", "Chatbots"],
         githubLink: "https://github.com/RushiChaganti/Medical-Advisor-Chatbot",
       }
@@ -98,7 +98,7 @@ export const portfolioData: PortfolioData = {
         id: 4,
         title: "KetsuCheck",
         description:
-          "ML-based password strength tester with 90%+ accuracy, Dockerized for easy deployment.",
+          "ML password strength classifier achieving 90%+ accuracy. Trained on real-world leaked password patterns; Dockerized for drop-in deployment.",
         tech: ["Python", "Scikit-learn", "Docker"],
         githubLink: "https://github.com/RushiChaganti/KetsuCheck",
       },
@@ -106,7 +106,7 @@ export const portfolioData: PortfolioData = {
         id: 5,
         title: "FaceRecognition",
         description:
-          "Basic face recognition implementation using Python and computer vision libraries.",
+          "Face recognition pipeline using OpenCV and dlib. Handles the annoying alignment step before encoding to improve match accuracy.",
         tech: ["Python", "OpenCV", "Machine Learning"],
         githubLink: "https://github.com/RushiChaganti/FaceRecognition",
       },
@@ -117,7 +117,7 @@ export const portfolioData: PortfolioData = {
         id: 6,
         title: "Auto_Jobs_Applier_AIHawk",
         description:
-          "A forked AI agent that automates job applications using intelligent resume targeting.",
+          "Main repository using the resume builder library. I contribute as a community helper and integrated the Zip code functionality from the library.",
         tech: ["Python", "AI agent", "Automation"],
         githubLink: "https://github.com/RushiChaganti/Auto_Jobs_Applier_AIHawk",
         oss: true,
@@ -126,7 +126,7 @@ export const portfolioData: PortfolioData = {
         id: 7,
         title: "lib_resume_builder_AIHawk",
         description:
-          "Resume generation library, forked from AIHawk—enhances resume building via code.",
+          "Contributed Zip code functionality and fixed critical bugs that caused issues for multiple users.",
         tech: ["Python", "Resume Builder"],
         githubLink: "https://github.com/RushiChaganti/lib_resume_builder_AIHawk",
         oss: true,
@@ -137,7 +137,7 @@ export const portfolioData: PortfolioData = {
         id: 8,
         title: "BIOGROFE",
         description:
-          "Collaborated with biotech peers to build a platform aiding students with job application details across 100+ companies.",
+          "Platform helping biotech students find job application details for 100+ companies. Built collaboratively; I owned the frontend and data aggregation.",
         tech: ["React", "Node.js"],
         githubLink: "https://github.com/RushiChaganti",
         link: "https://rushichaganti.github.io/Biogrofe/",
@@ -146,7 +146,7 @@ export const portfolioData: PortfolioData = {
         id: 9,
         title: "Metro Portfolio",
         description:
-          "A sleek developer portfolio inspired by Windows Metro UI, built with TypeScript.",
+          "Developer portfolio mimicking Windows Metro UI. Implemented keyboard navigation and tile-based layout for authentic feel.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/RushiChaganti/Metro-Portfolio",
         link: "https://rushichaganti.github.io/Metro-Portfolio/",
@@ -155,7 +155,7 @@ export const portfolioData: PortfolioData = {
         id: 13,
         title: "NeuralSim",
         description:
-          "Neural Networks through interactive, real-time simulations. ",
+          "Interactive neural network simulator with real-time weight visualization. Users can adjust hyperparameters live and watch propagation animate.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/RushiChaganti/NeuralSim",
         link: "https://rushichaganti.github.io/NeuralSim//",
@@ -163,7 +163,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 17,
         title: "Release-Check",
-        description: "Validate tech experience and stack compatibility for developers.",
+        description: "Tool for validating tech stack compatibility and experience levels. Used internally by Araise to standardize project requirements.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/Araise25/Release-Check",
         link: "https://araise25.github.io/Release-Check/",
@@ -171,7 +171,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 18,
         title: "araise_Web",
-        description: "Official website for the Araise organization, showcasing projects and tools.",
+        description: "Official Araise org website. I designed the component library and ensured consistent styling across all sub-project pages.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/Araise25/araise_Web",
         link: "https://araise25.github.io/araise_Web/",
@@ -182,7 +182,7 @@ export const portfolioData: PortfolioData = {
         id: 10,
         title: "IntelliSort",
         description:
-          "A Jupyter Notebook utility to intelligently sort and filter datasets/programmatic content.",
+          "Jupyter utility for smart dataset sorting and filtering. Infers column types automatically to apply appropriate sort logic.",
         tech: ["Python", "Data Utils"],
         githubLink: "https://github.com/RushiChaganti/IntelliSort",
       },
@@ -190,7 +190,7 @@ export const portfolioData: PortfolioData = {
         id: 11,
         title: "pygrep",
         description:
-          "A Python-based grep alternative—search for patterns in files via command line.",
+          "Python grep alternative for pattern searching across files. Added recursive directory walking and colored output for match context.",
         tech: ["Python", "CLI Tool"],
         githubLink: "https://github.com/RushiChaganti/pygrep",
       },
@@ -198,7 +198,7 @@ export const portfolioData: PortfolioData = {
         id: 12,
         title: "HangmanCli",
         description:
-          "Command-line Hangman game built in Python for interactive terminal play.",
+          "Terminal Hangman game in Python. Built as a learning project—handles input validation and ANSI escape codes for cross-platform display.",
         tech: ["Python", "CLI Game"],
         githubLink: "https://github.com/RushiChaganti/HangmanCli",
       },
@@ -207,28 +207,28 @@ export const portfolioData: PortfolioData = {
       {
         id: 19,
         title: "WTF-Tools",
-        description: "Collection of shell scripts to boost developer workflow and automation.",
+        description: "Shell scripts for common dev tasks (git shortcuts, env setup, cleanup). Designed to be sourced, not executed—minimal startup overhead.",
         tech: ["Shell", "Bash"],
         githubLink: "https://github.com/Araise25/WTF-Tools",
       },
       {
         id: 20,
         title: "psutils",
-        description: "A collection of command line utilities written in PowerShell for system management.",
+        description: "PowerShell equivalent of Unix 'cat'. Built to bring familiar file concatenation behavior to Windows without extra dependencies.",
         tech: ["PowerShell", "CLI Tools"],
         githubLink: "https://github.com/RushiChaganti/psutils",
       },
       {
         id: 21,
         title: "Araise_PM",
-        description: "Project management and automation scripts for the Araise organization.",
+        description: "Cross-platform package manager designed to simplify the installation and management of software packages, applications, and development tools.",
         tech: ["Shell", "Bash"],
         githubLink: "https://github.com/Araise25/Araise_PM",
       },
       {
         id: 24,
         title: "Release-Check-DB",
-        description: "A clean, community-maintained metadata repository for tech stacks and developer tools.",
+        description: "Community-maintained JSON database of tech stack metadata. Powers Release-Check's validation logic; accepts PRs for new tools.",
         tech: ["Metadata", "JSON"],
         githubLink: "https://github.com/Araise25/Release-Check-DB",
       }
@@ -239,7 +239,7 @@ export const portfolioData: PortfolioData = {
         id: 14,
         title: "Utility_Kit",
         description:
-          "Extension which clears 1 minute of history — as if it was never opened.(Stealth name 😅)",
+          "Firefox extension that silently clears the last minute of browsing history. Solves the 'I shouldn't have opened that at work' problem.",
         tech: ["HTML", "Javascript"],
         githubLink: "https://github.com/RushiChaganti/Utility_Kit/",
         firefoxLink: "https://addons.mozilla.org/en-US/firefox/addon/utility-kit/",
@@ -247,15 +247,15 @@ export const portfolioData: PortfolioData = {
       {
         id: 22,
         title: "YSB",
-        description: "Youtube Shorts Blocker for Firefox - clean up your feed.",
+        description: "Firefox extension that blocks YouTube Shorts from your feed. Uses CSS injection to hide Shorts elements without breaking page layout.",
         tech: ["JavaScript", "Web Extensions"],
         githubLink: "https://github.com/Araise25/YSB",
         firefoxLink: "https://addons.mozilla.org/en-US/firefox/addon/ysb/",
       },
       {
         id: 23,
-        title: "seezo-extension",
-        description: "Browser extension for enhanced data visualization and interaction.",
+        title: "Seezo",
+        description: "A privacy-first browser extension that leverages local AI models to analyze web interfaces for security vulnerabilities and sensitive asset exposure.",
         tech: ["Python", "JavaScript"],
         githubLink: "https://github.com/RushiChaganti/seezo-extension",
       }
@@ -266,7 +266,7 @@ export const portfolioData: PortfolioData = {
         id: 15,
         title: "system-prompts-and-models-of-ai-tools",
         description:
-          "Added Augument Code System Prompt",
+          "Contributed the Augment Code system prompt to a community collection of extracted AI tool prompts. Part of ongoing AI security research.",
         tech: ["AI Prompt Injection", "AI Red Teaming"],
         githubLink: "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools",
         oss: true,

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, X, ExternalLink, Search, Mail } from "lucide-react"
+import { Github, Linkedin, X, ExternalLink, Search, MessageCircle } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { BuildsSection } from "@/components/builds-section"
 
@@ -18,6 +18,7 @@ export default function Home() {
   const [showStartup, setShowStartup] = useState(true)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [highlightedWorkId, setHighlightedWorkId] = useState<number | null>(null)
+  const [showContactPopup, setShowContactPopup] = useState(false)
 
   const handleNavigation = (section: "home" | "builds" | "work", id?: number) => {
     setActiveSection(section)
@@ -42,6 +43,18 @@ export default function Home() {
   const handleStartupComplete = () => {
     setShowStartup(false)
   }
+
+  // Auto-show contact popup after 2 seconds
+  useEffect(() => {
+    if (!showStartup) {
+      const timer = setTimeout(() => {
+        setShowContactPopup(true)
+        // Auto-hide after 5 seconds
+        setTimeout(() => setShowContactPopup(false), 5000)
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [showStartup])
 
   if (showStartup) {
     return <StartupAnimation onComplete={handleStartupComplete} />
@@ -90,6 +103,31 @@ export default function Home() {
               <div className="text-muted-foreground">
                 <ThemeToggle />
               </div>
+
+              {/* Chat Contact Icon with Popup */}
+              <div className="relative group">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9 animate-bounce-subtle"
+                  title="Contact me"
+                  onClick={() => setShowContactPopup(!showContactPopup)}
+                >
+                  <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+
+                {/* Popup - shows on hover or auto-trigger */}
+                <div className={`absolute right-0 top-full mt-2 w-64 p-4 bg-card border border-border rounded-lg shadow-lg transition-all duration-300 z-50 ${showContactPopup ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0'
+                  }`}>
+                  <p className="text-sm font-medium text-foreground mb-2">Want to have a chat? 💬</p>
+                  <a
+                    href={portfolioData.links.email}
+                    className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+                  >
+                    rushichaganti@gmail.com
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -121,11 +159,7 @@ export default function Home() {
                       CV <ExternalLink className="ml-1 h-3 w-3" />
                     </a>
                   </Button>
-                  <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
-                    <a href={portfolioData.links.email}>
-                      <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
-                    </a>
-                  </Button>
+
                   <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
                     <a href={portfolioData.links.github} target="_blank" rel="noopener noreferrer">
                       <Github className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -162,7 +196,6 @@ export default function Home() {
 
                 {/* Work Experience Section */}
                 <WorkSection onViewAll={() => setActiveSection("work")} limit={1} />
-
 
 
 
@@ -220,12 +253,20 @@ export default function Home() {
       <footer className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 border-t border-border">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
           <p className="text-muted-foreground text-xs sm:text-sm text-center sm:text-left">© Rushi 2026 - Music echoes beyond the grave.</p>
-          <Button variant="ghost" size="sm" className="text-muted-foreground text-xs sm:text-sm">
-            <a href="https://github.com/rushichaganti/" target="_blank" rel="noopener noreferrer">
-              <code>Code</code>
+          <div className="flex items-center gap-2">
+            <a
+              href={portfolioData.links.email}
+              className="text-muted-foreground hover:text-foreground text-xs sm:text-sm underline underline-offset-4 transition-colors"
+            >
+              rushichaganti@gmail.com
             </a>
-          </Button>
-
+            <span className="text-muted-foreground">•</span>
+            <Button variant="ghost" size="sm" className="text-muted-foreground text-xs sm:text-sm p-0 h-auto">
+              <a href="https://github.com/rushichaganti/" target="_blank" rel="noopener noreferrer">
+                <code>Code</code>
+              </a>
+            </Button>
+          </div>
         </div>
       </footer>
       <SearchDialog

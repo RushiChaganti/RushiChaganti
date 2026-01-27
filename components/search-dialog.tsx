@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Search, X, Briefcase, Code, Terminal, FileText, Command } from "lucide-react"
+import { Search, X, Briefcase, Code, Terminal, FileText, Command, Mail } from "lucide-react"
 import { portfolioData } from "@/lib/portfolio-data"
 import { Build, WorkExperience } from "@/lib/types"
 import { useRouter } from "next/navigation"
@@ -12,9 +12,17 @@ interface SearchDialogProps {
     onNavigateToSection: (section: "home" | "builds" | "work", id?: number) => void
 }
 
+interface ContactItem {
+    id: string;
+    name: string;
+    value: string;
+    url: string;
+}
+
 type SearchResult =
     | { type: 'work'; item: WorkExperience }
     | { type: 'build'; category: string; item: Build }
+    | { type: 'contact'; item: ContactItem }
 
 export function SearchDialog({ open, onOpenChange, onNavigateToSection }: SearchDialogProps) {
     const [query, setQuery] = React.useState("")
@@ -69,6 +77,27 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
             })
         })
 
+        // Search Contact/Links
+        const contactItems: ContactItem[] = [
+            { id: 'email', name: 'Email', value: 'rushichaganti@gmail.com', url: portfolioData.links.email },
+            { id: 'github', name: 'GitHub', value: 'RushiChaganti', url: portfolioData.links.github },
+            { id: 'linkedin', name: 'LinkedIn', value: 'Rushi Chaganti', url: portfolioData.links.linkedin },
+            { id: 'twitter', name: 'Twitter / X', value: '@Rushichaganti', url: portfolioData.links.twitter },
+            { id: 'cv', name: 'Resume / CV', value: 'Download CV', url: portfolioData.links.cv },
+        ]
+
+        const contactKeywords = ['contact', 'email', 'mail', 'linkedin', 'github', 'twitter', 'x', 'social', 'resume', 'cv']
+
+        contactItems.forEach(contact => {
+            if (
+                contact.name.toLowerCase().includes(lowerQuery) ||
+                contact.value.toLowerCase().includes(lowerQuery) ||
+                contactKeywords.some(keyword => keyword.includes(lowerQuery))
+            ) {
+                newResults.push({ type: 'contact', item: contact })
+            }
+        })
+
         setResults(newResults)
         setSelectedIndex(0)
     }, [query])
@@ -94,12 +123,19 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
         onOpenChange(false)
         if (result.type === 'work') {
             onNavigateToSection("work", result.item.id)
-        } else {
+        } else if (result.type === 'build') {
             const link = result.item.link || result.item.githubLink
             if (link) {
                 if (window.confirm(`This will open an external link to ${link}. Do you want to continue?`)) {
                     window.open(link, '_blank')
                 }
+            }
+        } else if (result.type === 'contact') {
+            const url = result.item.url
+            if (url.startsWith('mailto:')) {
+                window.location.href = url
+            } else {
+                window.open(url, '_blank')
             }
         }
     }
@@ -145,6 +181,8 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                                 <div className="flex-shrink-0 mt-0.5">
                                     {result.type === 'work' ? (
                                         <Briefcase className="w-4 h-4 text-muted-foreground" />
+                                    ) : result.type === 'contact' ? (
+                                        <Mail className="w-4 h-4 text-muted-foreground" />
                                     ) : result.category === 'Bash' ? (
                                         <Terminal className="w-4 h-4 text-muted-foreground" />
                                     ) : (
@@ -154,16 +192,21 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between">
                                         <span className="font-medium truncate">
-                                            {result.type === 'work' ? result.item.company : result.item.title}
+                                            {result.type === 'work' ? result.item.company : result.type === 'contact' ? result.item.name : result.item.title}
                                         </span>
                                         {result.type === 'build' && (
                                             <span className="text-xs text-muted-foreground ml-2 px-1.5 py-0.5 rounded-full bg-muted">
                                                 {result.category}
                                             </span>
                                         )}
+                                        {result.type === 'contact' && (
+                                            <span className="text-xs text-muted-foreground ml-2 px-1.5 py-0.5 rounded-full bg-muted">
+                                                Contact
+                                            </span>
+                                        )}
                                     </div>
                                     <p className="text-xs text-muted-foreground truncate">
-                                        {result.type === 'work' ? result.item.role : result.item.description}
+                                        {result.type === 'work' ? result.item.role : result.type === 'contact' ? result.item.value : result.item.description}
                                     </p>
                                 </div>
                             </div>
