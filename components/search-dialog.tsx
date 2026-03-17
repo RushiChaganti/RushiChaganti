@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Search, X, Briefcase, Code, Terminal, FileText, Command, Mail } from "lucide-react"
+import { Search, X, Briefcase, Code, Terminal, FileText, Command, Mail, Heart } from "lucide-react"
 import { portfolioData } from "@/lib/portfolio-data"
 import { Build, WorkExperience } from "@/lib/types"
 import { useRouter } from "next/navigation"
@@ -50,53 +50,64 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
             return
         }
 
-        const lowerQuery = query.toLowerCase()
+        const lowerQuery = query.toLowerCase().trim()
+        const isOSSQuery = lowerQuery === 'oss'
         const newResults: SearchResult[] = []
 
-        // Search Work
-        portfolioData.work.forEach(work => {
-            if (
-                work.company.toLowerCase().includes(lowerQuery) ||
-                work.role.toLowerCase().includes(lowerQuery) ||
-                work.description.some(d => d.toLowerCase().includes(lowerQuery))
-            ) {
-                newResults.push({ type: 'work', item: work })
-            }
-        })
+        // Search Work (skip if specifically asking for OSS)
+        if (!isOSSQuery) {
+            portfolioData.work.forEach(work => {
+                if (
+                    work.company.toLowerCase().includes(lowerQuery) ||
+                    work.role.toLowerCase().includes(lowerQuery) ||
+                    work.description.some(d => d.toLowerCase().includes(lowerQuery))
+                ) {
+                    newResults.push({ type: 'work', item: work })
+                }
+            })
+        }
 
         // Search Builds
         Object.entries(portfolioData.builds).forEach(([category, builds]) => {
             builds.forEach(build => {
-                if (
-                    build.title.toLowerCase().includes(lowerQuery) ||
-                    build.description.toLowerCase().includes(lowerQuery) ||
-                    build.tech.some(t => t.toLowerCase().includes(lowerQuery))
-                ) {
-                    newResults.push({ type: 'build', category, item: build })
+                if (isOSSQuery) {
+                    if (build.oss) {
+                        newResults.push({ type: 'build', category, item: build })
+                    }
+                } else {
+                    if (
+                        build.title.toLowerCase().includes(lowerQuery) ||
+                        build.description.toLowerCase().includes(lowerQuery) ||
+                        build.tech.some(t => t.toLowerCase().includes(lowerQuery))
+                    ) {
+                        newResults.push({ type: 'build', category, item: build })
+                    }
                 }
             })
         })
 
-        // Search Contact/Links
-        const contactItems: ContactItem[] = [
-            { id: 'email', name: 'Email', value: 'rushichaganti@gmail.com', url: portfolioData.links.email },
-            { id: 'github', name: 'GitHub', value: 'RushiChaganti', url: portfolioData.links.github },
-            { id: 'linkedin', name: 'LinkedIn', value: 'Rushi Chaganti', url: portfolioData.links.linkedin },
-            { id: 'twitter', name: 'Twitter / X', value: '@Rushichaganti', url: portfolioData.links.twitter },
-            { id: 'cv', name: 'Resume / CV', value: 'Download CV', url: portfolioData.links.cv },
-        ]
+        if (!isOSSQuery) {
+            // Search Contact/Links
+            const contactItems: ContactItem[] = [
+                { id: 'email', name: 'Email', value: 'rushichaganti@gmail.com', url: portfolioData.links.email },
+                { id: 'github', name: 'GitHub', value: 'RushiChaganti', url: portfolioData.links.github },
+                { id: 'linkedin', name: 'LinkedIn', value: 'Rushi Chaganti', url: portfolioData.links.linkedin },
+                { id: 'twitter', name: 'Twitter / X', value: '@Rushichaganti', url: portfolioData.links.twitter },
+                { id: 'cv', name: 'Resume / CV', value: 'Download CV', url: portfolioData.links.cv },
+            ]
 
-        const contactKeywords = ['contact', 'email', 'mail', 'linkedin', 'github', 'twitter', 'x', 'social', 'resume', 'cv']
+            const contactKeywords = ['contact', 'email', 'mail', 'linkedin', 'github', 'twitter', 'x', 'social', 'resume', 'cv']
 
-        contactItems.forEach(contact => {
-            if (
-                contact.name.toLowerCase().includes(lowerQuery) ||
-                contact.value.toLowerCase().includes(lowerQuery) ||
-                contactKeywords.some(keyword => keyword.includes(lowerQuery))
-            ) {
-                newResults.push({ type: 'contact', item: contact })
-            }
-        })
+            contactItems.forEach(contact => {
+                if (
+                    contact.name.toLowerCase().includes(lowerQuery) ||
+                    contact.value.toLowerCase().includes(lowerQuery) ||
+                    contactKeywords.some(keyword => keyword.includes(lowerQuery))
+                ) {
+                    newResults.push({ type: 'contact', item: contact })
+                }
+            })
+        }
 
         setResults(newResults)
         setSelectedIndex(0)
@@ -173,7 +184,9 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                     <div className="max-h-[60vh] overflow-y-auto p-2">
                         {results.map((result, index) => (
                             <div
-                                key={`${result.type}-${result.type === 'work' ? result.item.id : result.item.id}`}
+                                key={result.type === 'build'
+                                    ? `build-${result.category}-${result.item.id}`
+                                    : `${result.type}-${result.item.id}`}
                                 onClick={() => handleSelect(result)}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-colors ${index === selectedIndex ? 'bg-accent text-accent-foreground' : 'hover:bg-muted/50 text-foreground'
                                     }`}
@@ -191,9 +204,17 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between">
-                                        <span className="font-medium truncate">
-                                            {result.type === 'work' ? result.item.company : result.type === 'contact' ? result.item.name : result.item.title}
-                                        </span>
+                                        <div className="flex items-center gap-2 truncate">
+                                            <span className="font-medium truncate">
+                                                {result.type === 'work' ? result.item.company : result.type === 'contact' ? result.item.name : result.item.title}
+                                            </span>
+                                            {result.type === 'build' && result.item.oss && (
+                                                <span className="flex items-center gap-1 text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded-full font-semibold border border-red-500/20">
+                                                    <Heart className="w-2.5 h-2.5 fill-current" />
+                                                    OSS
+                                                </span>
+                                            )}
+                                        </div>
                                         {result.type === 'build' && (
                                             <span className="text-xs text-muted-foreground ml-2 px-1.5 py-0.5 rounded-full bg-muted">
                                                 {result.category}
@@ -221,8 +242,24 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                 )}
 
                 {!query && (
-                    <div className="p-8 text-center text-muted-foreground text-sm">
-                        <p>Type to search...</p>
+                    <div className="p-8 text-center space-y-4">
+                        <div className="text-muted-foreground text-sm">
+                            <p>Type to search projects, work, or contacts...</p>
+                        </div>
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="px-3 py-1.5 rounded-full bg-red-500/5 border border-red-500/10 active:scale-95 transition-transform cursor-default">
+                                <p className="text-[10px] sm:text-xs text-red-500/80 font-medium">
+                                    Hint: Search "OSS" to see all open source contributions
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setQuery("OSS")}
+                                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-muted hover:bg-accent hover:text-accent-foreground transition-all text-sm border border-border group"
+                            >
+                                <Heart className="w-4 h-4 text-red-500 group-hover:fill-current transition-all" />
+                                <span className="font-medium">Browse OSS Projects</span>
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
