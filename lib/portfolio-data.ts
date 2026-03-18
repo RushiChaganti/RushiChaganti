@@ -51,6 +51,7 @@ export const portfolioData: PortfolioData = {
     }
   ],
   builds: {
+    lastUpdated: "March 2026",
     GenAI: [
       {
         id: 1,
@@ -139,8 +140,33 @@ export const portfolioData: PortfolioData = {
         description:
           "Platform helping biotech students find job application details for 100+ companies. Built collaboratively; I owned the frontend and data aggregation.",
         tech: ["React", "Node.js"],
-        githubLink: "https://github.com/RushiChaganti",
+        githubLink: "https://github.com/RushiChaganti/Biogrofe",
         link: "https://rushichaganti.github.io/Biogrofe/",
+      },
+      {
+        id: 25,
+        title: "ThinkPoint Arcade",
+        isNew: true,
+        description: "12 browser games controlled exclusively by your ThinkPad TrackPoint nub. A unique experiment in accessibility and hardware-specific interaction.",
+        tech: ["HTML", "JavaScript", "CSS"],
+        githubLink: "https://github.com/RushiChaganti/ThinkPoint-Arcade",
+      },
+      {
+        id: 26,
+        title: "LingoForge",
+        isNew: true,
+        description: "A comprehensive set of tools for lingodotdev, designed to streamline translation workflows and localization management.",
+        tech: ["TypeScript", "Next.js", "Tailwind CSS"],
+        githubLink: "https://github.com/RushiChaganti/LingoForge",
+      },
+      {
+        id: 28,
+        title: "AI-Portfolio",
+        isNew: true,
+        description: "A modern, high-performance portfolio showcasing projects and professional experience with interactive components.",
+        tech: ["TypeScript", "Next.js", "Tailwind CSS", "Framer Motion"],
+        githubLink: "https://github.com/RushiChaganti/AI-Portfolio",
+        link: "https://rushichaganti.github.io/AI-Portfolio/",
       },
       {
         id: 9,
@@ -231,7 +257,8 @@ export const portfolioData: PortfolioData = {
         description: "Community-maintained JSON database of tech stack metadata. Powers Release-Check's validation logic; accepts PRs for new tools.",
         tech: ["Metadata", "JSON"],
         githubLink: "https://github.com/Araise25/Release-Check-DB",
-      }
+      },
+
     ],
 
     Extensions: [

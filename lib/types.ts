@@ -9,6 +9,7 @@ export interface Build {
   demo?: string;
   oss?: boolean;
   firefoxLink?: string;
+  isNew?: boolean;
 }
 
 export interface Log {
@@ -38,6 +39,7 @@ export interface WorkExperience {
 export interface PortfolioData {
   work: WorkExperience[];
   builds: {
+    lastUpdated: string;
     GenAI: Build[];
     ML: Build[];
     Automation: Build[];

@@ -69,21 +69,23 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
 
         // Search Builds
         Object.entries(portfolioData.builds).forEach(([category, builds]) => {
-            builds.forEach(build => {
-                if (isOSSQuery) {
-                    if (build.oss) {
-                        newResults.push({ type: 'build', category, item: build })
+            if (Array.isArray(builds)) {
+                builds.forEach(build => {
+                    if (isOSSQuery) {
+                        if (build.oss) {
+                            newResults.push({ type: 'build', category, item: build })
+                        }
+                    } else {
+                        if (
+                            build.title.toLowerCase().includes(lowerQuery) ||
+                            build.description.toLowerCase().includes(lowerQuery) ||
+                            build.tech.some(t => t.toLowerCase().includes(lowerQuery))
+                        ) {
+                            newResults.push({ type: 'build', category, item: build })
+                        }
                     }
-                } else {
-                    if (
-                        build.title.toLowerCase().includes(lowerQuery) ||
-                        build.description.toLowerCase().includes(lowerQuery) ||
-                        build.tech.some(t => t.toLowerCase().includes(lowerQuery))
-                    ) {
-                        newResults.push({ type: 'build', category, item: build })
-                    }
-                }
-            })
+                })
+            }
         })
 
         if (!isOSSQuery) {
