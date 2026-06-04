@@ -3,7 +3,7 @@
 import { portfolioData } from "@/lib/portfolio-data"
 import { getAssetPath } from "@/lib/utils"
 import Image from "next/image"
-import { Briefcase } from "lucide-react"
+import { Briefcase, ExternalLink } from "lucide-react"
 
 import { useEffect, useRef } from "react"
 
@@ -60,9 +60,22 @@ export function WorkSection({ onViewAll, limit, highlightedId }: { onViewAll?: (
                                     )}
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-foreground text-sm sm:text-base group-hover:text-primary transition-colors">
-                                        {exp.company}
-                                    </h3>
+                                    <div className="flex items-center gap-1.5">
+                                        <h3 className="font-bold text-foreground text-sm sm:text-base group-hover:text-primary transition-colors">
+                                            {exp.company}
+                                        </h3>
+                                        {exp.link && (
+                                            <a
+                                                href={exp.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                onClick={e => e.stopPropagation()}
+                                                className="text-muted-foreground hover:text-primary transition-colors"
+                                            >
+                                                <ExternalLink className="w-3 h-3" />
+                                            </a>
+                                        )}
+                                    </div>
                                     <div className="flex items-center space-x-2">
                                         <p className="text-muted-foreground text-xs sm:text-sm">
                                             {exp.role}
