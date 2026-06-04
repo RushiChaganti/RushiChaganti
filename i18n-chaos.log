@@ -1,2 +1,0 @@
-[2026-03-10T03:46:20.535Z] [ERROR] LINGO_API_KEY is not set or invalid. Please check your .env file or .env.example.
-[2026-03-10T03:46:45.266Z] [ERROR] ENOENT: no such file or directory, scandir './src'
