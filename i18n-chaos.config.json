@@ -1,0 +1,10 @@
+{
+  "locales": [
+    "de",
+    "ar",
+    "th",
+    "ja"
+  ],
+  "src": "./src",
+  "testUrl": "http://localhost:3000"
+}

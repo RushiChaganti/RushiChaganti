@@ -3,6 +3,19 @@ import { PortfolioData } from './types';
 export const portfolioData: PortfolioData = {
   work: [
     {
+      id: 5,
+      company: "11FPS",
+      role: "AI Engineer - Content Creation & Automation",
+      period: "04/26 - Present",
+      description: [
+        "AI Storyboard Generator: Built a tool that parses film scripts to automatically extract characters and scene breakdowns, converting raw screenplays into structured storyboard-ready data.",
+        "Company Website: Designed and developed the main 11FPS website, handling layout, component architecture, and brand consistency.",
+        "Internal Tooling: Built automation and productivity tools used across the team to streamline content creation workflows.",
+      ],
+      type: "Full-time",
+      link: "https://www.11fps.com/",
+    },
+    {
       id: 1,
       company: "Gumbel AI",
       role: "NLP Engineer",

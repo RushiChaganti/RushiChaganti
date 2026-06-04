@@ -34,6 +34,7 @@ export interface WorkExperience {
   description: string[];
   type?: string;
   logo?: string;
+  link?: string;
 }
 
 export interface PortfolioData {
