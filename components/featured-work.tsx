@@ -52,6 +52,11 @@ function useStoryClock(running: boolean) {
   return t
 }
 
+// Grid card visual size; the docked rail renders the same visual scaled down
+const VISUAL_W = 312
+const VISUAL_H = 192
+const RAIL_SCALE = 0.8
+
 // Card shell: rises in once at ~30% visibility, reports whether the story should run
 function FeatureCard({
   title,
@@ -59,6 +64,8 @@ function FeatureCard({
   tech,
   href,
   delay = 0,
+  compact = false,
+  shown,
   visual,
 }: {
   title: string
@@ -67,16 +74,21 @@ function FeatureCard({
   href?: string
   // Seconds to hold the design before this card's story starts, so neighbours don't move in unison
   delay?: number
+  compact?: boolean
+  // Set by a parent that already knows whether the card is on screen (the docked rail)
+  shown?: boolean
   visual: (t: number, animate: boolean) => ReactNode
 }) {
   const ref = useRef<HTMLElement>(null)
-  const [entered, setEntered] = useState(false)
-  const [visible, setVisible] = useState(false)
+  const [enteredSelf, setEntered] = useState(false)
+  const [visibleSelf, setVisible] = useState(false)
+  const entered = enteredSelf || shown === true
+  const visible = shown ?? visibleSelf
   const reduced = usePrefersReducedMotion()
 
   useEffect(() => {
     const el = ref.current
-    if (!el) return
+    if (!el || shown !== undefined) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         setVisible(entry.isIntersecting)
@@ -86,7 +98,7 @@ function FeatureCard({
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [shown])
 
   // Stories start after the card has landed
   const [landed, setLanded] = useState(false)
@@ -109,8 +121,18 @@ function FeatureCard({
 
   return (
     <article ref={ref} className={`feature-card ${entered || reduced ? "is-in" : ""} rounded-2xl border border-border bg-card p-2`}>
-      <div className="feature-visual relative h-48 overflow-hidden rounded-lg bg-background">{visual(Math.max(0, t - delay), animate)}</div>
-      <div className="feature-text space-y-1 px-2 pb-2 pt-4">
+      <div
+        className="feature-visual relative overflow-hidden rounded-lg bg-background"
+        style={{ width: compact ? VISUAL_W * RAIL_SCALE : undefined, height: compact ? VISUAL_H * RAIL_SCALE : VISUAL_H }}
+      >
+        <div
+          className="h-full"
+          style={compact ? { width: VISUAL_W, height: VISUAL_H, transform: `scale(${RAIL_SCALE})`, transformOrigin: "top left" } : undefined}
+        >
+          {visual(Math.max(0, t - delay), animate)}
+        </div>
+      </div>
+      <div className={`feature-text space-y-1 px-2 ${compact ? "pb-1 pt-2 text-sm" : "pb-2 pt-4"}`}>
         <h3 className="font-medium text-foreground">
           {href ? (
             <a href={href} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
@@ -120,8 +142,12 @@ function FeatureCard({
             title
           )}
         </h3>
-        <p className="text-sm text-muted-foreground">{blurb}</p>
-        <p className="font-mono text-xs text-muted-foreground/70">{tech}</p>
+        {!compact && (
+          <>
+            <p className="text-sm text-muted-foreground">{blurb}</p>
+            <p className="font-mono text-xs text-muted-foreground/70">{tech}</p>
+          </>
+        )}
       </div>
     </article>
   )
@@ -193,64 +219,62 @@ function PriceVisual(time: number, animate: boolean) {
   )
 }
 
-/* ---------- Episode localizer: playhead processes clips, subtitle swaps language ---------- */
+/* ---------- KetsuCheck: a weak password gets flagged, a passphrase passes ---------- */
 
-const CLIPS = [18, 26, 14, 22, 20] // widths in % of the timeline
-const LOCALIZER_PERIOD = 8
+const WEAK = "hunter2"
+const STRONG = "violet-anvil-tide-42"
+const KETSU_PERIOD = 9
 
-function LocalizerVisual(time: number, animate: boolean) {
-  // Design: playhead parked at the start, every clip processed, English subtitle
-  const t = animate ? time % LOCALIZER_PERIOD : 0
-  const reset = track([[0, 0], [0.8, 0], [1.2, 1], [6.4, 1], [6.9, 0]], t) // 1 while clips are being redone
-  const head = track([[0, 0], [1.2, 0], [6.0, 100], [6.4, 100], [7.2, 0]], t)
-  const english = track([[0, 1], [0.8, 1], [1.1, 0], [3.6, 0], [4.0, 1]], t)
+// Typing helper: how many characters of `text` are visible at time t
+function typedAt(t: number, start: number, text: string, step = 0.08) {
+  return t < start ? 0 : Math.min(text.length, Math.floor((t - start) / step) + 1)
+}
 
-  let start = 0
+function KetsuVisual(time: number, animate: boolean) {
+  // Design: the strong passphrase, meter full, verdict "strong"
+  const t = animate ? time % KETSU_PERIOD : 0
+  let text = STRONG
+  let score = 0.94
+  if (t >= 0.8 && t < 1.4) {
+    text = STRONG.slice(0, Math.max(0, STRONG.length - Math.floor((t - 0.8) / 0.03))) // delete fast
+    score = 0
+  } else if (t >= 1.4 && t < 4.2) {
+    text = WEAK.slice(0, typedAt(t, 1.6, WEAK))
+    score = track([[2.3, 0], [2.9, 0.18]], t)
+  } else if (t >= 4.2 && t < 4.6) {
+    text = WEAK.slice(0, Math.max(0, WEAK.length - Math.floor((t - 4.2) / 0.05)))
+    score = track([[4.2, 0.18], [4.5, 0]], t)
+  } else if (t >= 4.6 && t < 8.2) {
+    text = STRONG.slice(0, typedAt(t, 4.8, STRONG, 0.07))
+    score = track([[4.8, 0], [6.2, 0.6], [6.8, 0.94]], t)
+  }
+  const weak = score < 0.5
+  const verdict = text.length === 0 ? "…" : weak ? "weak" : "strong"
+  const caretOn = Math.floor(t * 2) % 2 === 0
+
   return (
-    <div className="flex h-full flex-col justify-center gap-3 px-4">
-      <div className="relative h-24 overflow-hidden rounded-md border border-border bg-muted/40">
-        <span className="absolute left-2 top-2 rounded border border-border bg-background/70 px-1.5 font-mono text-xs text-muted-foreground">
-          {english > 0.5 ? "EN" : "HI"}
+    <div className="flex h-full flex-col justify-center gap-3 px-4 font-mono text-xs">
+      <div className="flex items-center rounded-md border border-border bg-muted/40 px-2.5 py-2 text-sm text-foreground">
+        <span className="truncate">{text}</span>
+        <span className="ml-px h-4 w-px bg-foreground" style={{ opacity: caretOn ? 1 : 0 }} />
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-muted">
+        <span
+          className="block h-full rounded-full transition-colors duration-300"
+          style={{
+            width: "100%",
+            clipPath: `inset(0 ${(1 - score) * 100}% 0 0 round 9999px)`,
+            background: weak ? "hsl(var(--destructive))" : "hsl(var(--foreground) / 0.8)",
+          }}
+        />
+      </div>
+      <div className="flex justify-between text-muted-foreground">
+        <span>classifier</span>
+        <span className={weak && text ? "text-destructive" : "text-foreground"}>
+          {verdict} · {(score * 100).toFixed(0)}%
         </span>
-        <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary/80" />
-        <div className="absolute inset-x-0 bottom-2 flex h-5 justify-center overflow-hidden text-sm text-foreground">
-          <span className="absolute" style={{ opacity: 1 - english, transform: `translateY(${english * -12}px)` }}>
-            मैं कल वापस आऊँगा।
-          </span>
-          <span className="absolute" style={{ opacity: english, transform: `translateY(${(1 - english) * 12}px)` }}>
-            I&apos;ll be back tomorrow.
-          </span>
-        </div>
       </div>
-
-      <div className="relative">
-        <div className="flex h-6 gap-1">
-          {CLIPS.map((w, i) => {
-            const clipStart = start
-            start += w
-            // A clip counts as processed once the playhead has passed its middle
-            const passed = head >= clipStart + w / 2 ? 1 : 0
-            const done = reset > 0.5 ? passed : 1
-            return (
-              <span
-                key={i}
-                className="rounded-sm border transition-colors duration-300"
-                style={{
-                  width: `${w}%`,
-                  background: done ? "hsl(var(--foreground) / 0.45)" : "transparent",
-                  borderColor: done ? "transparent" : "hsl(var(--foreground) / 0.3)",
-                  borderStyle: done ? "solid" : "dashed",
-                }}
-              />
-            )
-          })}
-        </div>
-        <span className="absolute -bottom-1 -top-1 w-0.5 rounded-full bg-primary" style={{ left: `${head}%` }} />
-      </div>
-      <div className="flex justify-between font-mono text-xs text-muted-foreground">
-        <span>ep 04 · 22:31</span>
-        <span>{reset > 0.5 && head < 100 ? "localizing…" : "5 / 5 clips"}</span>
-      </div>
+      <p className="text-muted-foreground/70">trained on leaked password patterns</p>
     </div>
   )
 }
@@ -375,38 +399,73 @@ function ArcadeVisual(time: number, animate: boolean) {
   )
 }
 
+const CARDS = [
+  {
+    title: "KetsuCheck",
+    blurb: "ML password strength classifier trained on real leaked password patterns. 90%+ accuracy, Dockerized.",
+    tech: "Python · scikit-learn · Docker",
+    href: "https://github.com/RushiChaganti/KetsuCheck",
+    delay: 0,
+    visual: KetsuVisual,
+  },
+  {
+    title: "AI Price Comparator",
+    blurb: "What one AI image or video costs across providers, in USD and INR.",
+    tech: "Cloudflare Workers · Bun · scrapers",
+    delay: 1.5,
+    visual: PriceVisual,
+  },
+  {
+    title: "Omarchy, merged PR",
+    blurb: "Ctrl+Backspace now clears the launcher filter in Omarchy, the Linux setup I daily drive.",
+    tech: "Linux · Hyprland · open source",
+    href: "https://github.com/omacom/omarchy",
+    delay: 0.75,
+    visual: OmarchyVisual,
+  },
+  {
+    title: "ThinkPoint Arcade",
+    blurb: "12 browser games you play with nothing but the ThinkPad TrackPoint.",
+    tech: "HTML · JavaScript · CSS",
+    href: "https://github.com/RushiChaganti/ThinkPoint-Arcade",
+    delay: 2.25,
+    visual: ArcadeVisual,
+  },
+]
+
 export function FeaturedWork() {
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [docked, setDocked] = useState(false)
+
+  // Dock the cards into the right-hand gutter once the grid has scrolled up past the viewport
+  useEffect(() => {
+    const el = gridRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      setDocked(!entry.isIntersecting && entry.boundingClientRect.top < 0)
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <FeatureCard
-        title="Episode Localizer"
-        blurb="Turns a regional-language episode into English: new cast, new locations, dub fitted line by line."
-        tech="Electron · Supabase · AI video · internal"
-        visual={LocalizerVisual}
-      />
-      <FeatureCard
-        title="AI Price Comparator"
-        blurb="What one AI image or video costs across providers, in USD and INR."
-        tech="Cloudflare Workers · Bun · scrapers"
-        delay={1.5}
-        visual={PriceVisual}
-      />
-      <FeatureCard
-        title="Omarchy, merged PR"
-        blurb="Ctrl+Backspace now clears the launcher filter in Omarchy, the Linux setup I daily drive."
-        tech="Linux · Hyprland · open source"
-        href="https://github.com/omacom/omarchy"
-        delay={0.75}
-        visual={OmarchyVisual}
-      />
-      <FeatureCard
-        title="ThinkPoint Arcade"
-        blurb="12 browser games you play with nothing but the ThinkPad TrackPoint."
-        tech="HTML · JavaScript · CSS"
-        href="https://github.com/RushiChaganti/ThinkPoint-Arcade"
-        delay={2.25}
-        visual={ArcadeVisual}
-      />
-    </div>
+    <>
+      <div ref={gridRef} className="grid gap-4 sm:grid-cols-2">
+        {CARDS.map((card) => (
+          <FeatureCard key={card.title} {...card} />
+        ))}
+      </div>
+
+      {/* Only on screens wide enough to have an empty gutter beside the main column */}
+      <aside
+        aria-label="Featured work"
+        aria-hidden={!docked}
+        className={`featured-rail fixed right-6 top-1/2 z-30 hidden flex-col gap-3 min-[1400px]:flex ${docked ? "is-docked" : ""}`}
+      >
+        {CARDS.map((card) => (
+          <FeatureCard key={card.title} {...card} compact shown={docked} />
+        ))}
+      </aside>
+    </>
   )
 }
