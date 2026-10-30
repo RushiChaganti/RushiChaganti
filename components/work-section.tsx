@@ -1,110 +1,87 @@
 "use client"
 
 import { portfolioData } from "@/lib/portfolio-data"
-import { getAssetPath } from "@/lib/utils"
-import Image from "next/image"
-import { Briefcase, ExternalLink } from "lucide-react"
+import { ArrowUpRight, ChevronDown } from "lucide-react"
+import { useEffect, useState } from "react"
 
-import { useEffect, useRef } from "react"
-
-export function WorkSection({ onViewAll, limit, highlightedId }: { onViewAll?: () => void; limit?: number; highlightedId?: number | null }) {
-    const workData = limit ? portfolioData.work.slice(0, limit) : portfolioData.work;
-    const itemRefs = useRef<{ [key: number]: HTMLDivElement | null }>({})
+export function WorkSection({ highlightedId }: { highlightedId?: number | null }) {
+    // Latest role starts open
+    const [openIds, setOpenIds] = useState<Set<number>>(() => new Set([portfolioData.work[0]?.id]))
 
     useEffect(() => {
-        if (highlightedId && itemRefs.current[highlightedId]) {
-            itemRefs.current[highlightedId]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        if (highlightedId) {
+            setOpenIds(prev => new Set(prev).add(highlightedId))
+            document.getElementById(`work-${highlightedId}`)?.scrollIntoView({ behavior: "smooth", block: "center" })
         }
     }, [highlightedId])
 
+    const toggle = (id: number) =>
+        setOpenIds(prev => {
+            const next = new Set(prev)
+            if (next.has(id)) next.delete(id)
+            else next.add(id)
+            return next
+        })
+
     return (
-        <div className="space-y-4 sm:space-y-6">
-            <div className="flex items-center justify-between">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground">work</h2>
-                <button
-                    onClick={onViewAll}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-                >
-                    view all
-                </button>
-            </div>
-
-            <div className="space-y-4">
-                {workData.map((exp) => (
-                    <div
+        <ol className="divide-y divide-border">
+            {portfolioData.work.map((exp) => {
+                const isOpen = openIds.has(exp.id)
+                return (
+                    <li
                         key={exp.id}
-                        ref={el => {
-                            if (el) itemRefs.current[exp.id] = el
-                        }}
-                        className={`group relative flex flex-col p-4 rounded-xl border transition-all duration-500 ${highlightedId === exp.id
-                                ? "bg-accent/20 border-primary shadow-[0_0_15px_rgba(var(--primary),0.3)] scale-[1.02]"
-                                : "bg-card/50 border-border/50 hover:bg-card hover:border-border"
-                            }`}
+                        id={`work-${exp.id}`}
+                        className={`py-4 transition-colors duration-700 ${highlightedId === exp.id ? "bg-accent/60" : ""}`}
                     >
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center space-x-4">
-                                <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-background border border-border group-hover:border-primary/50 transition-colors">
-                                    {exp.logo ? (
-                                        <div className="relative w-6 h-6 sm:w-8 sm:h-8">
-                                            <div className="absolute inset-0 flex items-center justify-center text-foreground">
-                                                <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 opacity-20" />
-                                            </div>
-                                            <div className="absolute inset-0 flex items-center justify-center font-bold text-lg">
-                                                {exp.company.charAt(0)}
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="flex items-center justify-center font-bold text-lg text-foreground">
-                                            {exp.company.charAt(0)}
-                                        </div>
-                                    )}
-                                </div>
-                                <div>
-                                    <div className="flex items-center gap-1.5">
-                                        <h3 className="font-bold text-foreground text-sm sm:text-base group-hover:text-primary transition-colors">
-                                            {exp.company}
-                                        </h3>
-                                        {exp.link && (
-                                            <a
-                                                href={exp.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                onClick={e => e.stopPropagation()}
-                                                className="text-muted-foreground hover:text-primary transition-colors"
-                                            >
-                                                <ExternalLink className="w-3 h-3" />
-                                            </a>
-                                        )}
-                                    </div>
-                                    <div className="flex items-center space-x-2">
-                                        <p className="text-muted-foreground text-xs sm:text-sm">
-                                            {exp.role}
-                                        </p>
-                                        {exp.type && (
-                                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent text-accent-foreground">
-                                                {exp.type}
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-foreground text-[10px] sm:text-xs font-medium uppercase tracking-wider">
-                                    {exp.period}
-                                </p>
-                            </div>
-                        </div>
+                        <button
+                            onClick={() => toggle(exp.id)}
+                            aria-expanded={isOpen}
+                            className="group flex w-full items-baseline gap-3 text-left"
+                        >
+                            <span className="flex-1">
+                                <span className="font-medium text-foreground">{exp.company}</span>
+                                <span className="text-muted-foreground"> · {exp.role}</span>
+                            </span>
+                            <span className="shrink-0 font-mono text-xs text-muted-foreground">{exp.period}</span>
+                            <ChevronDown
+                                className={`h-3.5 w-3.5 shrink-0 self-center text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
+                            />
+                        </button>
 
-                        <ul className="space-y-2 ml-4 sm:ml-16">
-                            {exp.description.map((item, index) => (
-                                <li key={index} className="text-muted-foreground text-xs sm:text-sm list-disc list-outside leading-relaxed">
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </div>
-        </div>
+                        {isOpen && (
+                            <div className="fade-up mt-3 space-y-3">
+                                <ul className="space-y-2">
+                                    {exp.description.map((item, index) => {
+                                        const [head, ...rest] = item.split(": ")
+                                        return (
+                                            <li key={index} className="text-sm leading-relaxed text-muted-foreground">
+                                                {rest.length ? (
+                                                    <>
+                                                        <span className="text-foreground">{head}</span>: {rest.join(": ")}
+                                                    </>
+                                                ) : (
+                                                    item
+                                                )}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                                {exp.link && (
+                                    <a
+                                        href={exp.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                                    >
+                                        {exp.link.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                                        <ArrowUpRight className="h-3 w-3" />
+                                    </a>
+                                )}
+                            </div>
+                        )}
+                    </li>
+                )
+            })}
+        </ol>
     )
 }

@@ -8,9 +8,13 @@ export const portfolioData: PortfolioData = {
       role: "AI Engineer - Content Creation & Automation",
       period: "04/26 - Present",
       description: [
-        "AI Storyboard Generator: Built a tool that parses film scripts to automatically extract characters and scene breakdowns, converting raw screenplays into structured storyboard-ready data.",
-        "Company Website: Designed and developed the main 11FPS website, handling layout, component architecture, and brand consistency.",
-        "Internal Tooling: Built automation and productivity tools used across the team to streamline content creation workflows.",
+        "Episode Localization App: Sole developer of a desktop app that turns a regional-language episode into an English one with a new cast and locations: AI face and location swaps that keep the original motion, line-by-line dub fitting, and a price shown before every paid call. Electron + Supabase, 275 commits.",
+        "AI Storyboard Studio: Paste a screenplay, get a scene list, a world bible (locations, lighting, palette), locked character references, rendered frames, and lip-synced video clips. Next.js, FastAPI, Supabase, fal.ai, LTX.",
+        "bebop, AI Film Pipeline: Idea or script to finished short film (plan, frames, clips, cut) with human approval at every paid stage, a prompt quality gate before spending, and FCPXML + SRT export.",
+        "11fps-kit: Shared TypeScript/Python SDK wrapping every AI and infra provider the company uses (Claude, Qwen, Higgsfield, Magnific, Seedance and more) with live cost estimates.",
+        "Price 11: Compares what one AI image or video costs across providers in USD and INR. Cloudflare Workers, prices auto-refreshed every 3 days.",
+        "Company Website: Designed and built 11fps.com: films, series, team pages, and video streaming from Cloudflare R2.",
+        "Internal Tooling: A team workspace app, a peer-review app, and browser automation for bulk image and video generation.",
       ],
       type: "Full-time",
       link: "https://www.11fps.com/",
@@ -64,8 +68,17 @@ export const portfolioData: PortfolioData = {
     }
   ],
   builds: {
-    lastUpdated: "March 2026",
+    lastUpdated: "October 2026",
     GenAI: [
+      {
+        id: 30,
+        title: "lipsync-studio",
+        description:
+          "Masking and compositing layer around any lip-sync model. A tracked mouth mask decides which pixels are pasted back, with feathering, color matching and optional Poisson blending.",
+        tech: ["Python", "Computer Vision", "Lip-sync"],
+        githubLink: "https://github.com/RushiChaganti/lipsync-studio",
+        isNew: true,
+      },
       {
         id: 1,
         title: "DocuTalk",
