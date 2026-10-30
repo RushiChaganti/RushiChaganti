@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { BuildsSection } from "@/components/builds-section"
 import { WorkSection } from "@/components/work-section"
+import { FeaturedWork } from "@/components/featured-work"
 import { SearchDialog } from "@/components/search-dialog"
 import { portfolioData } from "@/lib/portfolio-data"
 import { getAssetPath } from "@/lib/utils"
@@ -123,6 +124,10 @@ export default function Home() {
             · <LocalTime />
           </p>
         </section>
+
+        <Section id="featured" title="Featured">
+          <FeaturedWork />
+        </Section>
 
         {/* About */}
         <Section id="about" title="About">
