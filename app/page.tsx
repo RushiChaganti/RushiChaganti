@@ -11,7 +11,7 @@ import { portfolioData } from "@/lib/portfolio-data"
 import { getAssetPath } from "@/lib/utils"
 
 const NAME = "Rushi Chaganti"
-const TAGLINE = "I build AI tools that turn scripts into films."
+const TAGLINE = "I like building things people actually use."
 
 const BELIEFS = [
   "Show the price before you spend it.",
@@ -130,11 +130,11 @@ export default function Home() {
             <div className="space-y-4 leading-relaxed text-muted-foreground">
               <p>
                 I&apos;m Rushi, also called <span className="text-foreground">Yasha</span> (Japanese for &quot;fierce night spirit&quot;).
-                I build the tooling behind AI filmmaking: storyboards from screenplays, episode localization, and pipelines that take
-                an idea all the way to a finished cut.
+                I like taking a rough idea and turning it into something people can use the same week: AI tools, automations,
+                browser extensions and the odd ThinkPad game.
               </p>
               <p>
-                Before that: RAG systems, automation agents and a fair amount of breaking things to see how they work. Off the
+                Along the way: RAG systems, automation agents and a fair amount of breaking things to see how they work. Off the
                 keyboard, it&apos;s chess and anime.
               </p>
             </div>

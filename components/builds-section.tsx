@@ -34,15 +34,19 @@ export function BuildsSection() {
         {items.map(({ category, build }) => (
           <li key={`${category}-${build.id}`} className="group py-4">
             <div className="flex items-baseline gap-2">
-              <a
-                href={build.link || build.demo || build.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-medium text-foreground underline-offset-4 hover:underline"
-              >
-                {build.title}
-                <ArrowUpRight className="h-3 w-3 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
+              {build.link || build.demo || build.githubLink ? (
+                <a
+                  href={build.link || build.demo || build.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-foreground underline-offset-4 hover:underline"
+                >
+                  {build.title}
+                  <ArrowUpRight className="h-3 w-3 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              ) : (
+                <span className="font-medium text-foreground">{build.title}</span>
+              )}
               {build.isNew && <span className="font-mono text-[10px] uppercase text-primary">new</span>}
               {build.oss && <span className="font-mono text-[10px] uppercase text-muted-foreground">oss</span>}
             </div>

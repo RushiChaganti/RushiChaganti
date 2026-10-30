@@ -76,7 +76,6 @@ export const portfolioData: PortfolioData = {
         description:
           "Masking and compositing layer around any lip-sync model. A tracked mouth mask decides which pixels are pasted back, with feathering, color matching and optional Poisson blending.",
         tech: ["Python", "Computer Vision", "Lip-sync"],
-        githubLink: "https://github.com/RushiChaganti/lipsync-studio",
         isNew: true,
       },
       {
