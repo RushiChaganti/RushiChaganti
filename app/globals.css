@@ -181,3 +181,16 @@ html {
     transition: none;
   }
 }
+
+/* GitHub's "archived" label colours (Primer attention palette) */
+.badge-archived {
+  color: #9a6700;
+  background-color: #fff8c5;
+  border: 1px solid rgba(212, 167, 44, 0.4);
+  border-radius: 9999px;
+}
+.dark .badge-archived {
+  color: #d29922;
+  background-color: rgba(187, 128, 9, 0.15);
+  border-color: rgba(187, 128, 9, 0.4);
+}

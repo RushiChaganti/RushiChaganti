@@ -54,7 +54,7 @@ export function BuildsSection() {
                 <span className="font-medium text-foreground">{build.title}</span>
               )}
               {build.isNew && <span className="font-mono text-[10px] uppercase text-primary">new</span>}
-              {build.archived && <span className="font-mono text-[10px] uppercase text-muted-foreground">archived</span>}
+              {build.archived && <span className="badge-archived px-1.5 font-mono text-xs">archived</span>}
               {build.oss && <span className="font-mono text-[10px] uppercase text-muted-foreground">oss</span>}
             </div>
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{build.description}</p>
