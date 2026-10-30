@@ -9,17 +9,23 @@ const { lastUpdated, ...categories } = portfolioData.builds
 
 export function BuildsSection() {
   const [active, setActive] = useState<string>("All")
+  const [showArchived, setShowArchived] = useState(false)
 
-  const items = Object.entries(categories)
-    .filter(([category]) => active === "All" || category === active)
-    .flatMap(([category, builds]) => (builds as Build[]).map((build) => ({ category, build })))
+  const all = Object.entries(categories).flatMap(([category, builds]) => (builds as Build[]).map((build) => ({ category, build })))
+  const archivedCount = all.filter(({ build }) => build.archived).length
+  const visible = all.filter(({ build }) => showArchived || !build.archived)
+  // Only offer categories that still have something to show
+  const categoryNames = Object.keys(categories).filter((c) => visible.some(({ category }) => category === c))
+
+  const items = visible
+    .filter(({ category }) => active === "All" || category === active)
     // New builds first, otherwise keep the data order
     .sort((a, b) => Number(!!b.build.isNew) - Number(!!a.build.isNew))
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs">
-        {["All", ...Object.keys(categories)].map((category) => (
+        {["All", ...categoryNames].map((category) => (
           <button
             key={category}
             onClick={() => setActive(category)}
@@ -48,6 +54,7 @@ export function BuildsSection() {
                 <span className="font-medium text-foreground">{build.title}</span>
               )}
               {build.isNew && <span className="font-mono text-[10px] uppercase text-primary">new</span>}
+              {build.archived && <span className="font-mono text-[10px] uppercase text-muted-foreground">archived</span>}
               {build.oss && <span className="font-mono text-[10px] uppercase text-muted-foreground">oss</span>}
             </div>
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{build.description}</p>
@@ -68,7 +75,22 @@ export function BuildsSection() {
         ))}
       </ul>
 
-      <p className="font-mono text-xs text-muted-foreground">last updated {lastUpdated}</p>
+      <div className="flex items-center justify-between font-mono text-xs text-muted-foreground">
+        {archivedCount > 0 ? (
+          <button
+            onClick={() => {
+              setShowArchived(!showArchived)
+              setActive("All")
+            }}
+            className="underline underline-offset-4 hover:text-foreground"
+          >
+            {showArchived ? "hide archived" : `show archived (${archivedCount})`}
+          </button>
+        ) : (
+          <span />
+        )}
+        <span>last updated {lastUpdated}</span>
+      </div>
     </div>
   )
 }

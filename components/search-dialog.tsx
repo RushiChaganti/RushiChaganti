@@ -71,6 +71,7 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
         Object.entries(portfolioData.builds).forEach(([category, builds]) => {
             if (Array.isArray(builds)) {
                 builds.forEach(build => {
+                    if (build.archived) return
                     if (isOSSQuery) {
                         if (build.oss) {
                             newResults.push({ type: 'build', category, item: build })
