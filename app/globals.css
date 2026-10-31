@@ -198,7 +198,8 @@ html {
 /* Featured cards docked in the right gutter after scrolling past the grid */
 .featured-rail {
   opacity: 0;
-  transform: translate(calc(100% + 24px), -50%);
+  transform-origin: right center;
+  transform: translate(calc(100% + 24px), -50%) scale(var(--rail-fit, 1));
   pointer-events: none;
   transition:
     transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -206,7 +207,7 @@ html {
 }
 .featured-rail.is-docked {
   opacity: 1;
-  transform: translate(0, -50%);
+  transform: translate(0, -50%) scale(var(--rail-fit, 1));
   pointer-events: auto;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -214,9 +215,29 @@ html {
     transition: opacity 0.3s linear;
   }
 }
-@media (max-height: 880px) {
+.featured-rail-left {
+  transform-origin: left center;
+  transform: translate(calc(-100% - 24px), -50%) scale(var(--rail-fit, 1));
+}
+@media (max-height: 519px) {
   .featured-rail {
     display: none !important;
+  }
+}
+
+/* Grid cards slide toward their side, shrink and fade as the grid scrolls away (driven by --collapse) */
+@media (min-width: 1400px) and (min-height: 520px) and (prefers-reduced-motion: no-preference) {
+  .collapse-item {
+    will-change: transform, opacity;
+    opacity: calc(1 - var(--collapse, 0));
+  }
+  .collapse-left {
+    transform-origin: left center;
+    transform: translateX(calc(var(--collapse, 0) * -22vw)) scale(calc(1 - var(--collapse, 0) * 0.3));
+  }
+  .collapse-right {
+    transform-origin: right center;
+    transform: translateX(calc(var(--collapse, 0) * 22vw)) scale(calc(1 - var(--collapse, 0) * 0.3));
   }
 }
 
@@ -229,3 +250,20 @@ html {
 .flashbang {
   animation: flashbang 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* Live site cards: lift on hover (on top of the shared rise-in) */
+.site-card.is-in {
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+    filter 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.site-card.is-in:hover {
+  transform: translateY(-4px);
+  border-color: hsl(var(--muted-foreground) / 0.4);
+}
+.site-card.is-in:active {
+  transform: translateY(-2px) scale(0.98);
+}
+

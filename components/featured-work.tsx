@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type ReactNode } from "react"
+import { DockRail, useCollapseDock } from "@/components/dock-rail"
 
 // Motion tokens (design-to-motion): in-out curve for fills and swaps
 const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2)
@@ -435,37 +436,23 @@ const CARDS = [
 
 export function FeaturedWork() {
   const gridRef = useRef<HTMLDivElement>(null)
-  const [docked, setDocked] = useState(false)
-
-  // Dock the cards into the right-hand gutter once the grid has scrolled up past the viewport
-  useEffect(() => {
-    const el = gridRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(([entry]) => {
-      setDocked(!entry.isIntersecting && entry.boundingClientRect.top < 0)
-    })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const docked = useCollapseDock(gridRef)
 
   return (
     <>
       <div ref={gridRef} className="grid gap-4 sm:grid-cols-2">
         {CARDS.map((card) => (
-          <FeatureCard key={card.title} {...card} />
+          <div key={card.title} className="collapse-item collapse-right">
+            <FeatureCard {...card} />
+          </div>
         ))}
       </div>
 
-      {/* Only on screens wide enough to have an empty gutter beside the main column */}
-      <aside
-        aria-label="Featured work"
-        aria-hidden={!docked}
-        className={`featured-rail fixed right-6 top-1/2 z-30 hidden flex-col gap-3 min-[1400px]:flex ${docked ? "is-docked" : ""}`}
-      >
+      <DockRail side="right" docked={docked} label="Featured work">
         {CARDS.map((card) => (
           <FeatureCard key={card.title} {...card} compact shown={docked} />
         ))}
-      </aside>
+      </DockRail>
     </>
   )
 }

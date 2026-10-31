@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { BuildsSection } from "@/components/builds-section"
 import { WorkSection } from "@/components/work-section"
 import { FeaturedWork } from "@/components/featured-work"
+import { LiveSites } from "@/components/live-sites"
 import { SearchDialog } from "@/components/search-dialog"
 import { portfolioData } from "@/lib/portfolio-data"
 import { getAssetPath } from "@/lib/utils"
@@ -127,6 +128,10 @@ export default function Home() {
 
         <Section id="featured" title="Featured">
           <FeaturedWork />
+        </Section>
+
+        <Section id="sites" title="Live sites">
+          <LiveSites />
         </Section>
 
         {/* About */}

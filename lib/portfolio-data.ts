@@ -201,7 +201,6 @@ export const portfolioData: PortfolioData = {
       {
         id: 9,
         title: "Metro Portfolio",
-        archived: true,
         description:
           "Developer portfolio mimicking Windows Metro UI. Implemented keyboard navigation and tile-based layout for authentic feel.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
