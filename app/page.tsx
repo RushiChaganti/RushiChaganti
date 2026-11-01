@@ -1,72 +1,32 @@
 "use client"
 
-import { useState, useEffect, type ReactNode } from "react"
-import { ArrowUpRight, Search } from "lucide-react"
-import Image from "next/image"
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Github, Linkedin, X, ExternalLink, Search, MessageCircle } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { BuildsSection } from "@/components/builds-section"
+
+import { StartupAnimation } from "@/components/startup-animation"
 import { WorkSection } from "@/components/work-section"
-import { FeaturedWork } from "@/components/featured-work"
-import { LiveSites } from "@/components/live-sites"
-import { SearchDialog } from "@/components/search-dialog"
 import { portfolioData } from "@/lib/portfolio-data"
 import { getAssetPath } from "@/lib/utils"
-
-const NAME = "Rushi Chaganti"
-const TAGLINE = "I like building things people actually use."
-
-const BELIEFS = [
-  "Show the price before you spend it.",
-  "Ship small, ship often, keep a human in the loop.",
-  "Break things just enough to learn how they work.",
-]
-
-const SOCIALS = [
-  { label: "GitHub", href: portfolioData.links.github },
-  { label: "LinkedIn", href: portfolioData.links.linkedin },
-  { label: "X", href: portfolioData.links.twitter },
-  { label: "CV", href: portfolioData.links.cv },
-]
-
-function LocalTime() {
-  // Rendered client-side only so the static export doesn't bake in a build-time clock
-  const [time, setTime] = useState<string | null>(null)
-
-  useEffect(() => {
-    const format = () =>
-      new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" }).format(new Date())
-    setTime(format())
-    const id = setInterval(() => setTime(format()), 10_000)
-    return () => clearInterval(id)
-  }, [])
-
-  return (
-    <span>
-      India · {time ?? "--:--"} IST
-    </span>
-  )
-}
-
-function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
-  return (
-    <section id={id} className="scroll-mt-20 space-y-6">
-      <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{title}</h2>
-      {children}
-    </section>
-  )
-}
+import Image from 'next/image'
+import { SearchDialog } from "@/components/search-dialog"
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState<"home" | "builds" | "work">("home")
+  const [showStartup, setShowStartup] = useState(true)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [highlightedWorkId, setHighlightedWorkId] = useState<number | null>(null)
+  const [showContactPopup, setShowContactPopup] = useState(false)
 
   const handleNavigation = (section: "home" | "builds" | "work", id?: number) => {
+    setActiveSection(section)
     if (id) {
       setHighlightedWorkId(id)
+      // Reset highlight after animation
       setTimeout(() => setHighlightedWorkId(null), 2000)
-      return
     }
-    document.getElementById(section === "home" ? "about" : section)?.scrollIntoView({ behavior: "smooth" })
   }
 
   useEffect(() => {
@@ -80,147 +40,240 @@ export default function Home() {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
+  const handleStartupComplete = () => {
+    setShowStartup(false)
+  }
+
+  // Auto-show contact popup after 2 seconds
+  useEffect(() => {
+    if (!showStartup) {
+      const timer = setTimeout(() => {
+        setShowContactPopup(true)
+        // Auto-hide after 5 seconds
+        setTimeout(() => setShowContactPopup(false), 5000)
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [showStartup])
+
+  if (showStartup) {
+    return <StartupAnimation onComplete={handleStartupComplete} />
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-6 py-3 text-sm">
-          <a href="#top" className="font-medium text-foreground">
-            rushi
-          </a>
-          <nav className="flex items-center gap-4 text-muted-foreground sm:gap-5">
-            <a href="#work" className="transition-colors hover:text-foreground">work</a>
-            <a href="#builds" className="transition-colors hover:text-foreground">builds</a>
-            <a href="#contact" className="transition-colors hover:text-foreground">contact</a>
+      {/* Navigation */}
+      <nav className="bg-card border-b border-border">
+        <div className="flex items-center justify-center px-4 sm:px-6 py-3 max-w-6xl mx-auto">
+          <div className="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-base">
             <button
-              onClick={() => setIsSearchOpen(true)}
-              title="Search (Ctrl+K)"
-              className="flex items-center gap-1 transition-colors hover:text-foreground"
+              onClick={() => setActiveSection("home")}
+              className="text-foreground hover:text-foreground/80 transition-colors font-medium"
             >
-              <Search className="h-3.5 w-3.5" />
-              <kbd className="hidden font-mono text-[10px] sm:inline">⌘K</kbd>
+              About
             </button>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </header>
-
-      <main id="top" className="mx-auto max-w-2xl space-y-24 px-6 pb-24 pt-16 sm:pt-28">
-        {/* Hero */}
-        <section className="space-y-6">
-          <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-6xl" aria-label={NAME}>
-            {NAME.split("").map((char, i) => (
-              <span key={i} aria-hidden className="letter-in" style={{ animationDelay: `${i * 35}ms` }}>
-                {char === " " ? " " : char}
-              </span>
-            ))}
-          </h1>
-          <p className="fade-up text-lg text-muted-foreground sm:text-xl" style={{ animationDelay: "550ms" }}>
-            {TAGLINE}
-          </p>
-          <p className="fade-up font-mono text-xs text-muted-foreground" style={{ animationDelay: "750ms" }}>
-            AI Engineer at{" "}
-            <a href="https://www.11fps.com/" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4">
-              11FPS
-            </a>{" "}
-            · <LocalTime />
-          </p>
-        </section>
-
-        <Section id="featured" title="Featured">
-          <FeaturedWork />
-        </Section>
-
-        <Section id="sites" title="Live sites">
-          <LiveSites />
-        </Section>
-
-        {/* About */}
-        <Section id="about" title="About">
-          <div className="flex items-start gap-6">
-            <div className="space-y-4 leading-relaxed text-muted-foreground">
-              <p>
-                I&apos;m Rushi, also called <span className="text-foreground">Yasha</span> (Japanese for &quot;fierce night spirit&quot;).
-                I like taking a rough idea and turning it into something people can use the same week: AI tools, automations,
-                browser extensions and the odd ThinkPad game.
-              </p>
-              <p>
-                Along the way: RAG systems, automation agents and a fair amount of breaking things to see how they work. Off the
-                keyboard, it&apos;s chess and anime.
-              </p>
-            </div>
-            <div className="group relative hidden h-24 w-24 shrink-0 sm:block">
-              <Image
-                src={getAssetPath("/Brook.jpg")}
-                alt="Brook"
-                width={96}
-                height={96}
-                priority
-                className="h-full w-full rounded-md object-cover transition-opacity duration-300 group-hover:opacity-0"
-              />
-              <Image
-                src={getAssetPath("/me.jpg")}
-                alt="Rushi Chaganti"
-                width={96}
-                height={96}
-                className="absolute inset-0 h-full w-full rounded-md object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <p className="text-sm text-foreground">3 things I believe in</p>
-            <ol className="space-y-2 text-muted-foreground">
-              {BELIEFS.map((belief, i) => (
-                <li key={belief} className="flex gap-3">
-                  <span className="font-mono text-xs leading-6 text-muted-foreground/70">0{i + 1}</span>
-                  <span>{belief}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </Section>
-
-        <Section id="work" title="Work">
-          <WorkSection highlightedId={highlightedWorkId} />
-        </Section>
-
-        <Section id="builds" title="Builds">
-          <BuildsSection />
-        </Section>
-
-        <Section id="contact" title="Contact">
-          <p className="text-2xl text-foreground sm:text-3xl">
-            Building something with AI and video?{" "}
-            <a href={portfolioData.links.email} className="underline decoration-muted-foreground underline-offset-8 hover:decoration-foreground">
-              let&apos;s chat
-            </a>
-            .
-          </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
-            {SOCIALS.map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-0.5 transition-colors hover:text-foreground"
+            <button
+              onClick={() => setActiveSection("work")}
+              className={`hover:text-foreground transition-colors ${activeSection === "work" ? "text-foreground" : "text-muted-foreground"
+                }`}
+            >
+              Work
+            </button>
+            <button
+              onClick={() => setActiveSection("builds")}
+              className={`hover:text-foreground transition-colors ${activeSection === "builds" ? "text-foreground" : "text-muted-foreground"
+                }`}
+            >
+              Builds
+            </button>
+            <div className="flex items-center space-x-1 sm:space-x-2 ml-4 sm:ml-8">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9"
+                onClick={() => setIsSearchOpen(true)}
+                title="Search (Ctrl+K)"
               >
-                {label}
-                <ArrowUpRight className="h-3 w-3" />
-              </a>
-            ))}
+                <Search className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
+              <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 ml-1">
+                <span className="text-xs">⌘K</span>
+              </kbd>
+
+              <div className="text-muted-foreground">
+                <ThemeToggle />
+              </div>
+
+              {/* Chat Contact Icon with Popup */}
+              <div className="relative group">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9 animate-bounce-subtle"
+                  title="Contact me"
+                  onClick={() => setShowContactPopup(!showContactPopup)}
+                >
+                  <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+
+                {/* Popup - shows on hover or auto-trigger */}
+                <div className={`absolute right-0 top-full mt-2 w-64 p-4 bg-card border border-border rounded-lg shadow-lg transition-all duration-300 z-50 ${showContactPopup ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0'
+                  }`}>
+                  <p className="text-sm font-medium text-foreground mb-2">Want to have a chat? 💬</p>
+                  <a
+                    href={portfolioData.links.email}
+                    className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+                  >
+                    rushichaganti@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-        </Section>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className={`grid gap-8 sm:gap-12 ${activeSection === "home" ? "grid-cols-1 lg:grid-cols-3" : "grid-cols-1"}`}>
+          {/* Left Content */}
+          <div className={`space-y-6 sm:space-y-8 ${activeSection === "home" ? "lg:col-span-2" : ""}`}>
+            {activeSection === "home" && (
+              <>
+                {/* Hero Section */}
+                <div className="space-y-3 sm:space-y-4">
+                  <p className="text-muted-foreground text-sm sm:text-base">Hello, this is</p>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+                    Rushi Chaganti<span className="text-muted-foreground text-sm sm:text-lg font-normal">(Yasha)</span>
+                    <span className="text-muted-foreground">.</span>
+                  </h1>
+                  <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+                    Where neural nets meet exploits — building, breaking, and learning.
+                  </p>
+                </div>
+
+                {/* Social Links */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button variant="secondary" size="sm" asChild className="text-xs sm:text-sm">
+                    <a href={portfolioData.links.cv} target="_blank" rel="noopener noreferrer">
+                      CV <ExternalLink className="ml-1 h-3 w-3" />
+                    </a>
+                  </Button>
+
+                  <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
+                    <a href={portfolioData.links.github} target="_blank" rel="noopener noreferrer">
+                      <Github className="h-3 w-3 sm:h-4 sm:w-4" />
+                    </a>
+                  </Button>
+                  <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
+                    <a href={portfolioData.links.linkedin} target="_blank" rel="noopener noreferrer">
+                      <Linkedin className="h-3 w-3 sm:h-4 sm:w-4" />
+                    </a>
+                  </Button>
+                  <Button variant="ghost" size="icon" asChild className="h-8 w-8 sm:h-9 sm:w-9">
+                    <a href={portfolioData.links.twitter} target="_blank" rel="noopener noreferrer">
+                      <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                    </a>
+                  </Button>
+                </div>
+
+                {/* Bio Section */}
+                <div className="space-y-4 sm:space-y-6">
+                  <h2 className="text-xl sm:text-2xl font-bold text-foreground">Bio</h2>
+                  <div className="space-y-3 sm:space-y-4 text-muted-foreground leading-relaxed text-sm sm:text-base">
+                    <p>
+                      <span className="font-semibold">In a nutshell</span> — I’m an AI/ML engineer in the making, blending research with
+                      hands-on projects in automation, web technologies, and intelligent systems. From crafting AI-driven bots and
+                      document-query platforms to experimenting with neural networks and RAG pipelines, I thrive at the intersection of
+                      problem-solving and innovation.
+                    </p>
+                    <p>
+                      Always curious, always building—whether it’s decoding models, engineering automation agents, or breaking things
+                      just enough to learn how they work.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Work Experience Section */}
+                <WorkSection onViewAll={() => setActiveSection("work")} limit={1} />
+
+
+
+                {/* Miscellaneous Section */}
+                <div className="space-y-4 sm:space-y-6">
+                  <h2 className="text-xl sm:text-2xl font-bold text-foreground">Miscellaneous</h2>
+                  <ul className="space-y-2 text-muted-foreground text-sm sm:text-base">
+                    <li>
+                      <strong>Yasha</strong> is a Japanese for <em> fierce night spirit </em>
+                    </li>
+                    <li>
+                      Currently interested in <strong>Chess</strong> and <strong>Anime</strong>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            )}
+
+            {activeSection === "builds" && <BuildsSection />}
+
+
+
+            {activeSection === "work" && <WorkSection highlightedId={highlightedWorkId} />}
+          </div>
+
+          {/* Right Content - Brook Image */}
+          {activeSection === "home" && (
+            <div className="lg:col-span-1 flex justify-center lg:justify-start">
+              <div className="sticky top-8 group cursor-pointer">
+                <div className="relative w-24 h-24 sm:w-32 sm:h-32">
+                  <Image
+                    src={getAssetPath('/Brook.jpg')}
+                    alt="Brook character"
+                    width={128}
+                    height={128}
+                    priority
+                    className="object-contain w-full h-full transition-opacity duration-300 group-hover:opacity-0"
+                  />
+                  <Image
+                    src={getAssetPath('/me.jpg')}
+                    alt="Rushi Chaganti"
+                    width={128}
+                    height={128}
+                    className="object-contain w-full h-full absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
       </main>
 
-      <footer className="mx-auto flex max-w-2xl justify-between px-6 py-8 font-mono text-xs text-muted-foreground">
-        <span>© Rushi {new Date().getFullYear()}. Music echoes beyond the grave.</span>
-        <a href="https://github.com/RushiChaganti/RushiChaganti" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
-          source
-        </a>
+      {/* Footer */}
+      <footer className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 border-t border-border">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+          <p className="text-muted-foreground text-xs sm:text-sm text-center sm:text-left">© Rushi 2026 - Music echoes beyond the grave.</p>
+          <div className="flex items-center gap-2">
+            <a
+              href={portfolioData.links.email}
+              className="text-muted-foreground hover:text-foreground text-xs sm:text-sm underline underline-offset-4 transition-colors"
+            >
+              rushichaganti@gmail.com
+            </a>
+            <span className="text-muted-foreground">•</span>
+            <Button variant="ghost" size="sm" className="text-muted-foreground text-xs sm:text-sm p-0 h-auto">
+              <a href="https://github.com/rushichaganti/" target="_blank" rel="noopener noreferrer">
+                <code>Code</code>
+              </a>
+            </Button>
+          </div>
+        </div>
       </footer>
-
-      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} onNavigateToSection={handleNavigation} />
+      <SearchDialog
+        open={isSearchOpen}
+        onOpenChange={setIsSearchOpen}
+        onNavigateToSection={handleNavigation}
+      />
     </div>
   )
 }

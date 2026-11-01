@@ -4,13 +4,12 @@ export interface Build {
   title: string;
   description: string;
   tech: string[];
-  githubLink?: string;
+  githubLink: string;
   link?: string;
   demo?: string;
   oss?: boolean;
   firefoxLink?: string;
   isNew?: boolean;
-  archived?: boolean; // hidden from the main list and search, shown under "show archived"
 }
 
 export interface Log {

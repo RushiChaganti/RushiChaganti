@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Search, X, Briefcase, Code, Terminal, FileText, Command, Mail, Heart, Archive } from "lucide-react"
+import { Search, X, Briefcase, Code, Terminal, FileText, Command, Mail, Heart } from "lucide-react"
 import { portfolioData } from "@/lib/portfolio-data"
 import { Build, WorkExperience } from "@/lib/types"
 import { useRouter } from "next/navigation"
@@ -51,8 +51,7 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
         }
 
         const lowerQuery = query.toLowerCase().trim()
-        const isArchivedQuery = lowerQuery === 'archived'
-        const isOSSQuery = lowerQuery === 'oss' || isArchivedQuery
+        const isOSSQuery = lowerQuery === 'oss'
         const newResults: SearchResult[] = []
 
         // Search Work (skip if specifically asking for OSS)
@@ -72,11 +71,7 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
         Object.entries(portfolioData.builds).forEach(([category, builds]) => {
             if (Array.isArray(builds)) {
                 builds.forEach(build => {
-                    if (isArchivedQuery) {
-                        if (build.archived) {
-                            newResults.push({ type: 'build', category, item: build })
-                        }
-                    } else if (isOSSQuery) {
+                    if (isOSSQuery) {
                         if (build.oss) {
                             newResults.push({ type: 'build', category, item: build })
                         }
@@ -116,9 +111,7 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
             })
         }
 
-        // Archived builds go after everything else
-        const isArchived = (r: SearchResult) => r.type === 'build' && !!r.item.archived
-        setResults([...newResults.filter(r => !isArchived(r)), ...newResults.filter(isArchived)])
+        setResults(newResults)
         setSelectedIndex(0)
     }, [query])
 
@@ -217,12 +210,6 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                                             <span className="font-medium truncate">
                                                 {result.type === 'work' ? result.item.company : result.type === 'contact' ? result.item.name : result.item.title}
                                             </span>
-                                            {result.type === 'build' && result.item.archived && (
-                                                <span className="badge-archived flex items-center gap-1 px-1.5 py-0.5 text-xs font-semibold">
-                                                    <Archive className="h-3 w-3" />
-                                                    Archived
-                                                </span>
-                                            )}
                                             {result.type === 'build' && result.item.oss && (
                                                 <span className="flex items-center gap-1 text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded-full font-semibold border border-red-500/20">
                                                     <Heart className="w-2.5 h-2.5 fill-current" />
@@ -273,13 +260,6 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                             >
                                 <Heart className="w-4 h-4 text-red-500 group-hover:fill-current transition-all" />
                                 <span className="font-medium">Browse OSS Projects</span>
-                            </button>
-                            <button
-                                onClick={() => setQuery("archived")}
-                                className="badge-archived flex items-center gap-2 px-4 py-2 text-sm transition-opacity hover:opacity-80"
-                            >
-                                <Archive className="h-4 w-4" />
-                                <span className="font-medium">Browse archived projects</span>
                             </button>
                         </div>
                     </div>

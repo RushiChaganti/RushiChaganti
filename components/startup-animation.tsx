@@ -42,12 +42,13 @@ export function StartupAnimation({ onComplete }: { onComplete: () => void }) {
   if (!isVisible) return null
 
   return (
-    <div className="fixed inset-0 bg-background z-50 flex items-center justify-center">
+    // Always black, whatever the theme. Inline styles so it can't depend on Tailwind generating the classes.
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: "#000", color: "#fff" }}>
       <div className="text-center">
-        <div className="text-6xl font-bold text-foreground animate-pulse">
+        <div className="text-6xl font-bold animate-pulse">
           {greetings[currentIndex].text}
         </div>
-        <div className="text-sm text-muted-foreground mt-4 opacity-60">
+        <div className="text-sm mt-4" style={{ opacity: 0.6 }}>
           {greetings[currentIndex].lang}
         </div>
       </div>
