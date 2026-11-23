@@ -111,3 +111,8 @@
     @apply bg-primary/20 text-foreground;
   }
 }
+
+/* Greeting already played this tab session (flag set by the inline script in layout.tsx) */
+html[data-greeted] .startup-overlay {
+  display: none;
+}

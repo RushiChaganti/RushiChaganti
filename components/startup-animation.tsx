@@ -13,11 +13,22 @@ const greetings = [
   { text: "안녕하세요", lang: "Korean" },
 ]
 
+export const GREETED_KEY = "greeted"
+
 export function StartupAnimation({ onComplete }: { onComplete: () => void }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
+    // Play once per browser tab session; the inline script in layout.tsx hides it before first paint too
+    try {
+      if (sessionStorage.getItem(GREETED_KEY)) {
+        setIsVisible(false)
+        onComplete()
+        return
+      }
+    } catch {}
+
     // total animation time (in ms)
     const totalDuration = 900
     const intervalTime = totalDuration / greetings.length
@@ -27,6 +38,9 @@ export function StartupAnimation({ onComplete }: { onComplete: () => void }) {
         if (prev >= greetings.length - 1) {
           clearInterval(interval)
           setTimeout(() => {
+            try {
+              sessionStorage.setItem(GREETED_KEY, "1")
+            } catch {}
             setIsVisible(false)
             setTimeout(onComplete, 200)
           }, 100)
@@ -43,7 +57,7 @@ export function StartupAnimation({ onComplete }: { onComplete: () => void }) {
 
   return (
     // Always black, whatever the theme. Inline styles so it can't depend on Tailwind generating the classes.
-    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: "#000", color: "#fff" }}>
+    <div className="startup-overlay fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: "#000", color: "#fff" }}>
       <div className="text-center">
         <div className="text-6xl font-bold animate-pulse">
           {greetings[currentIndex].text}

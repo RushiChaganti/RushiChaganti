@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Favicon: the logo "11" (ElevenFPS-Logo-Clean.ttf glyphs "1" + "2") on the brand background. -->
+  <rect width="100" height="100" rx="20" fill="#0b0b0c"/>
+  <g fill="#ff4d1c" transform="translate(28.75 82) scale(0.064 -0.064)">
+    <path d="M111 1000H263V0H0V421H47Q111 421 111 485Z"/>
+    <path transform="translate(389 0)" d="M0 1000H275V608H164Q117 608 117 556V0H0Z"/>
+  </g>
+</svg>

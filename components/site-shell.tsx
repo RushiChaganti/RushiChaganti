@@ -33,6 +33,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [highlightedWorkId, setHighlightedWorkId] = useState<number | null>(null)
   const [showContactPopup, setShowContactPopup] = useState(false)
+  const [isMac, setIsMac] = useState(false)
+
+  useEffect(() => setIsMac(/Mac|iPhone|iPad/.test(navigator.userAgent)), [])
 
   const handleStartupComplete = useCallback(() => setShowStartup(false), [])
 
@@ -55,9 +58,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  // Auto-show contact popup 2s after the greeting, hide it 5s later
+  // Auto-show contact popup 2s after the greeting, hide it 5s later. Once per tab session.
   useEffect(() => {
     if (!showStartup) {
+      try {
+        if (sessionStorage.getItem("contactShown")) return
+        sessionStorage.setItem("contactShown", "1")
+      } catch {}
       let hide: ReturnType<typeof setTimeout>
       const show = setTimeout(() => {
         setShowContactPopup(true)
@@ -95,13 +102,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   size="icon"
                   className="text-muted-foreground hover:text-foreground hover:bg-accent h-8 w-8 sm:h-9 sm:w-9"
                   onClick={() => setIsSearchOpen(true)}
-                  title="Search (Ctrl+K)"
+                  title={`Search (${isMac ? "⌘K" : "Ctrl+K"})`}
                   aria-label="Search"
                 >
                   <Search className="h-3 w-3 sm:h-4 sm:w-4" />
                 </Button>
                 <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 ml-1">
-                  <span className="text-xs">⌘K</span>
+                  <span className="text-xs">{isMac ? "⌘K" : "Ctrl K"}</span>
                 </kbd>
 
                 <div className="text-muted-foreground">

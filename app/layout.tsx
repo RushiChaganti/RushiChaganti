@@ -7,9 +7,29 @@ import Script from "next/script"
 import { SiteShell } from "@/components/site-shell"
 import "./globals.css"
 
+const DESCRIPTION =
+  "AI engineer at 11FPS, building tools for AI-made films. Previously RAG systems, LLM bots and browser automation."
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rushichaganti.github.io"),
   title: "Rushi Chaganti - Portfolio",
-  description: "Turning ideas into experiences, one project at a time.",
+  description: DESCRIPTION,
+  // Link previews on LinkedIn, X, WhatsApp, Slack
+  openGraph: {
+    type: "website",
+    url: "/RushiChaganti/",
+    siteName: "Rushi Chaganti",
+    title: "Rushi Chaganti - AI Engineer",
+    description: DESCRIPTION,
+    images: [{ url: "/RushiChaganti/og.png", width: 1200, height: 630, alt: "Rushi Chaganti - AI Engineer at 11FPS" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rushi Chaganti - AI Engineer",
+    description: DESCRIPTION,
+    creator: "@Rushichaganti",
+    images: ["/RushiChaganti/og.png"],
+  },
   icons: {
     icon: getAssetPath('/bat.png'),
     shortcut: getAssetPath('/bat.png'),
@@ -33,7 +53,7 @@ export default function RootLayout({
         {/* Apply the saved or system theme before first paint, so dark visitors never see a white flash */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`,
+            __html: `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}try{if(sessionStorage.getItem("greeted"))document.documentElement.dataset.greeted="1"}catch(e){}`,
           }}
         />
         <Script

@@ -48,14 +48,17 @@ export default function Home() {
           <h2 className="text-xl sm:text-2xl font-bold text-foreground">Bio</h2>
           <div className="space-y-3 sm:space-y-4 text-muted-foreground leading-relaxed text-sm sm:text-base">
             <p>
-              <span className="font-semibold">In a nutshell</span> — I’m an AI/ML engineer in the making, blending research with
-              hands-on projects in automation, web technologies, and intelligent systems. From crafting AI-driven bots and
-              document-query platforms to experimenting with neural networks and RAG pipelines, I thrive at the intersection of
-              problem-solving and innovation.
+              I’m an AI engineer at{" "}
+              <a href="https://www.11fps.com/" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4">
+                11FPS
+              </a>
+              , where I build the tools behind AI-made films: a desktop app that turns a regional-language episode into an
+              English one, a screenplay-to-storyboard studio, and a pipeline that takes an idea to a finished short.
             </p>
+            <p>Before that I tested RAG systems, built LLM-powered bots and automated browsers for a few startups.</p>
             <p>
-              Always curious, always building—whether it’s decoding models, engineering automation agents, or breaking things
-              just enough to learn how they work.
+              I like AI tools people can trust: show the price before every paid call, keep a human in the loop, and break
+              things just enough to learn how they work.
             </p>
           </div>
         </div>

@@ -2,7 +2,8 @@
 
 import { portfolioData } from "@/lib/portfolio-data"
 import Link from "next/link"
-import { Briefcase, ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react"
+import { getAssetPath } from "@/lib/utils"
 import { useEffect, useRef, useState } from "react"
 import { useHighlightedWork } from "@/components/site-shell"
 
@@ -75,16 +76,17 @@ export function WorkSection({ limit }: { limit?: number }) {
                         >
                             <div className="flex items-start justify-between gap-4 mb-4">
                                 <div className="flex items-center space-x-4 min-w-0">
-                                    <div className="relative shrink-0 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-background border border-border group-hover:border-primary/50 transition-colors">
+                                    <div className="relative shrink-0 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-background border border-border overflow-hidden group-hover:border-primary/50 transition-colors">
                                         {exp.logo ? (
-                                            <div className="relative w-6 h-6 sm:w-8 sm:h-8">
-                                                <div className="absolute inset-0 flex items-center justify-center text-foreground">
-                                                    <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 opacity-20" />
-                                                </div>
-                                                <div className="absolute inset-0 flex items-center justify-center font-bold text-lg">
-                                                    {exp.company.charAt(0)}
-                                                </div>
-                                            </div>
+                                            // eslint-disable-next-line @next/next/no-img-element -- static export, images are unoptimized anyway
+                                            <img
+                                                src={getAssetPath(exp.logo)}
+                                                alt={`${exp.company} logo`}
+                                                width={32}
+                                                height={32}
+                                                loading="lazy"
+                                                className="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded"
+                                            />
                                         ) : (
                                             <div className="flex items-center justify-center font-bold text-lg text-foreground">
                                                 {exp.company.charAt(0)}

@@ -6,7 +6,7 @@ export const portfolioData: PortfolioData = {
       id: 5,
       company: "11FPS",
       role: "AI Engineer - Content Creation & Automation",
-      period: "04/26 - Present",
+      period: "Apr 2026 - Present",
       description: [
         "Episode Localization App: Sole developer of a desktop app that turns a regional-language episode into an English one with a new cast and locations: AI face and location swaps that keep the original motion, line-by-line dub fitting, and a price shown before every paid call. Electron + Supabase, 275 commits.",
         "AI Storyboard Studio: Paste a screenplay, get a scene list, a world bible (locations, lighting, palette), locked character references, rendered frames, and lip-synced video clips. Next.js, FastAPI, Supabase, fal.ai, LTX.",
@@ -18,12 +18,13 @@ export const portfolioData: PortfolioData = {
       ],
       type: "Full-time",
       link: "https://www.11fps.com/",
+      logo: "/logos/11fps.svg",
     },
     {
       id: 1,
       company: "Gumbel AI",
       role: "NLP Engineer",
-      period: "03/25 - 04/25",
+      period: "Mar 2025 - Apr 2025",
       description: [
         "RAG System Evaluation & Model Development: Tested and evaluated multiple RAG systems, developing models using RAFT, Light RAG, and Graph RAG to enhance retrieval-augmented generation performance."
       ],
@@ -32,8 +33,9 @@ export const portfolioData: PortfolioData = {
     {
       id: 2,
       company: "Say Apps",
+      logo: "/logos/sayapps.svg",
       role: "R&D Intern",
-      period: "10/24 - 02/25",
+      period: "Oct 2024 - Feb 2025",
       description: [
         "ChatGPT-Powered Telegram Bot: Developed an automated YouTube transcript summarization tool using Selenium, cutting down manual workload.",
         "Web Scraping & Content Generation: Utilized Selenium and custom agents to extract and process data from platforms like X and LinkedIn, significantly enhancing content creation.",
@@ -45,8 +47,9 @@ export const portfolioData: PortfolioData = {
     {
       id: 3,
       company: "Referso",
+      logo: "/logos/referso.svg",
       role: "R&D Intern",
-      period: "10/24 - 02/25",
+      period: "Oct 2024 - Feb 2025",
       description: [
         "Automated Workday Careers: Developed Selenium-based automation to optimize recruitment workflows, reducing manual processing time by significant margins.",
         "Enhanced Workable Platform: Designed and implemented robust Playwright scripts to improve candidate management efficiency and process reliability.",
@@ -57,8 +60,9 @@ export const portfolioData: PortfolioData = {
     {
       id: 4,
       company: "Wictronix",
+      logo: "/logos/wictronix.png",
       role: "AI / ML Engineer Intern",
-      period: "07/23 - 08/23",
+      period: "Jul 2023 - Aug 2023",
       description: [
         "Vehicle Image Annotation & YOLOv8 Integration: Led the annotation of 10,000+ images across diverse vehicle types to enhance object detection accuracy.",
         "Optimized Annotation Workflow: Developed a YOLOv8-compatible format that streamlined the annotation process and boosted efficiency.",
@@ -68,7 +72,7 @@ export const portfolioData: PortfolioData = {
     }
   ],
   builds: {
-    lastUpdated: "March 2026",
+    lastUpdated: "November 2026",
     GenAI: [
       {
         id: 1,
