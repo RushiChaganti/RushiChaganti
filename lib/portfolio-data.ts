@@ -176,7 +176,7 @@ export const portfolioData: PortfolioData = {
         id: 8,
         title: "BIOGROFE",
         featured: true,
-        image: "/shots/biogrofe.webp",
+        image: "/shots/biogrofe-dark.webp",
         description:
           "Platform helping biotech students find job application details for 100+ companies. Built collaboratively; I owned the frontend and data aggregation.",
         tech: ["React", "Node.js"],
@@ -223,7 +223,7 @@ export const portfolioData: PortfolioData = {
         id: 13,
         title: "NeuralSim",
         featured: true,
-        image: "/shots/neuralsim.webp",
+        image: "/shots/neuralsim-dark.webp",
         description:
           "Interactive neural network simulator with real-time weight visualization. Users can adjust hyperparameters live and watch propagation animate.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
@@ -234,7 +234,7 @@ export const portfolioData: PortfolioData = {
         id: 17,
         title: "Release-Check",
         featured: true,
-        image: "/shots/release-check.webp",
+        image: "/shots/release-check-dark.webp",
         description: "Tool for validating tech stack compatibility and experience levels. Used internally by Araise to standardize project requirements.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/Araise25/Release-Check",
