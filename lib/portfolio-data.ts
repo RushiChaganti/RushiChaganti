@@ -81,6 +81,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 2,
         title: "docqa-ai",
+        archived: true,
         description:
           "Python toolkit for extracting answers from long-form documents. Built to handle chunking and retrieval without relying on external APIs.",
         tech: ["Python", "LangChain", "QA Systems"],
@@ -106,6 +107,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 16,
         title: "Medical-Advisor-Chatbot",
+        archived: true,
         description: "NLP chatbot for health-related guidance. Focused on intent classification to route user queries to appropriate response templates safely.",
         tech: ["Python", "NLP", "Chatbots"],
         githubLink: "https://github.com/RushiChaganti/Medical-Advisor-Chatbot",
@@ -123,6 +125,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 5,
         title: "FaceRecognition",
+        archived: true,
         description:
           "Face recognition pipeline using OpenCV and dlib. Handles the annoying alignment step before encoding to improve match accuracy.",
         tech: ["Python", "OpenCV", "Machine Learning"],
@@ -143,6 +146,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 7,
         title: "lib_resume_builder_AIHawk",
+        archived: true,
         description:
           "Contributed Zip code functionality and fixed critical bugs that caused issues for multiple users.",
         tech: ["Python", "Resume Builder"],
@@ -179,6 +183,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 28,
         title: "AI-Portfolio",
+        archived: true,
         isNew: true,
         description: "A modern, high-performance portfolio showcasing projects and professional experience with interactive components.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS", "Framer Motion"],
@@ -188,6 +193,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 9,
         title: "Metro Portfolio",
+        archived: true,
         description:
           "Developer portfolio mimicking Windows Metro UI. Implemented keyboard navigation and tile-based layout for authentic feel.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
@@ -224,6 +230,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 10,
         title: "IntelliSort",
+        archived: true,
         description:
           "Jupyter utility for smart dataset sorting and filtering. Infers column types automatically to apply appropriate sort logic.",
         tech: ["Python", "Data Utils"],
@@ -232,6 +239,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 11,
         title: "pygrep",
+        archived: true,
         description:
           "Python grep alternative for pattern searching across files. Added recursive directory walking and colored output for match context.",
         tech: ["Python", "CLI Tool"],
@@ -240,6 +248,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 12,
         title: "HangmanCli",
+        archived: true,
         description:
           "Terminal Hangman game in Python. Built as a learning project—handles input validation and ANSI escape codes for cross-platform display.",
         tech: ["Python", "CLI Game"],
@@ -257,6 +266,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 20,
         title: "psutils",
+        archived: true,
         description: "PowerShell equivalent of Unix 'cat'. Built to bring familiar file concatenation behavior to Windows without extra dependencies.",
         tech: ["PowerShell", "CLI Tools"],
         githubLink: "https://github.com/RushiChaganti/psutils",
@@ -280,8 +290,9 @@ export const portfolioData: PortfolioData = {
 
     Extensions: [
       {
-        id: 14,
+        id: 27,
         title: "Utility_Kit",
+        archived: true,
         description:
           "Firefox extension that silently clears the last minute of browsing history. Solves the 'I shouldn't have opened that at work' problem.",
         tech: ["HTML", "Javascript"],
@@ -309,6 +320,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 15,
         title: "system-prompts-and-models-of-ai-tools",
+        archived: true,
         description:
           "Contributed the Augment Code system prompt to a community collection of extracted AI tool prompts. Part of ongoing AI security research.",
         tech: ["AI Prompt Injection", "AI Red Teaming"],

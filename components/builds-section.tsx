@@ -1,27 +1,36 @@
-import React from "react"
+"use client"
+
+import React, { useState } from "react"
 import { portfolioData } from "@/lib/portfolio-data"
 import { Build } from "@/lib/types"
 import { ExternalLink, Github, Heart } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
+const { lastUpdated, ...categories } = portfolioData.builds
+const archivedCount = Object.values(categories).flat().filter((b) => b.archived).length
+
 export function BuildsSection() {
+  const [showArchived, setShowArchived] = useState(false)
+
   return (
     <section id="builds" className="space-y-6 sm:space-y-10">
       <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Builds</h2>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Builds</h1>
         <p className="text-xs sm:text-sm text-muted-foreground font-mono uppercase tracking-wider">
-          Last updated: {portfolioData.builds.lastUpdated}
+          Last updated: {lastUpdated}
         </p>
       </div>
-      {Object.entries(portfolioData.builds)
-        .filter(([key]) => key !== "lastUpdated")
+      {Object.entries(categories)
+        .map(([language, projects]) => [language, (projects as Build[]).filter((b) => showArchived || !b.archived)] as const)
+        // Hide categories whose builds are all archived
+        .filter(([, projects]) => projects.length > 0)
         .map(([language, projects]) => (
           <div key={language} className="space-y-4 sm:space-y-6">
             <h3 className="text-base sm:text-lg font-semibold text-muted-foreground uppercase tracking-wide">
               {language}
             </h3>
             <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
-              {(projects as Build[]).map((build: Build) => (
+              {projects.map((build: Build) => (
                 <div
                   key={build.id}
                   className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-muted/30 rounded-xl p-3 sm:p-4 hover:bg-muted/50 transition space-y-3 sm:space-y-0"
@@ -41,6 +50,11 @@ export function BuildsSection() {
                     </div>
                     <div className="flex items-center gap-2">
                       <h4 className="text-sm sm:text-base font-medium">{build.title}</h4>
+                      {build.archived && (
+                        <Badge variant="outline" className="text-[8px] sm:text-[9px] h-4 px-1 leading-none text-muted-foreground">
+                          ARCHIVED
+                        </Badge>
+                      )}
                       {build.isNew && (
                         <Badge variant="default" className="bg-primary text-[8px] sm:text-[9px] h-4 px-1 leading-none">
                           NEW
@@ -56,6 +70,7 @@ export function BuildsSection() {
                           href={build.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`${build.title} on GitHub`}
                           className="text-muted-foreground hover:text-foreground"
                         >
                           <Github className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -66,6 +81,7 @@ export function BuildsSection() {
                           href={build.link}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`${build.title} live site`}
                           className="text-muted-foreground hover:text-foreground"
                         >
                           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -76,6 +92,7 @@ export function BuildsSection() {
                           href={build.demo}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`${build.title} demo`}
                           className="text-muted-foreground hover:text-foreground"
                         >
                           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -96,6 +113,7 @@ export function BuildsSection() {
                           rel="noopener noreferrer"
                           className="text-muted-foreground hover:text-[#FF7139] transition-colors"
                           title="View on Firefox Add-ons"
+                          aria-label={`${build.title} on Firefox Add-ons`}
                         >
                           <svg
                             role="img"
@@ -117,6 +135,15 @@ export function BuildsSection() {
             </div>
           </div>
         ))}
+      {archivedCount > 0 && (
+        <button
+          onClick={() => setShowArchived(!showArchived)}
+          aria-expanded={showArchived}
+          className="font-mono text-xs text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+        >
+          {showArchived ? "hide archived" : `show archived (${archivedCount})`}
+        </button>
+      )}
     </section>
   )
 }

@@ -4,10 +4,11 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { getAssetPath } from "@/lib/utils"
 import Script from "next/script"
+import { SiteShell } from "@/components/site-shell"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Rushi Chaganti- Portfolio",
+  title: "Rushi Chaganti - Portfolio",
   description: "Turning ideas into experiences, one project at a time.",
   icons: {
     icon: getAssetPath('/bat.png'),
@@ -50,7 +51,9 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <SiteShell>{children}</SiteShell>
+      </body>
     </html>
   )
 }

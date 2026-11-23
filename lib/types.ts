@@ -10,6 +10,7 @@ export interface Build {
   oss?: boolean;
   firefoxLink?: string;
   isNew?: boolean;
+  archived?: boolean; // hidden on the Builds page until "show archived" is clicked
 }
 
 export interface Log {
