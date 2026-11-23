@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { createContext, useCallback, useContext, useEffect, useState, useSyncExternalStore } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Search, MessageCircle } from "lucide-react"
@@ -33,9 +33,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [highlightedWorkId, setHighlightedWorkId] = useState<number | null>(null)
   const [showContactPopup, setShowContactPopup] = useState(false)
-  const [isMac, setIsMac] = useState(false)
-
-  useEffect(() => setIsMac(/Mac|iPhone|iPad/.test(navigator.userAgent)), [])
+  // false on the server, real value in the browser (no setState-in-effect needed)
+  const isMac = useSyncExternalStore(
+    () => () => {},
+    () => /Mac|iPhone|iPad/.test(navigator.userAgent),
+    () => false,
+  )
 
   const handleStartupComplete = useCallback(() => setShowStartup(false), [])
 
@@ -167,7 +170,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
         </footer>
 
-        <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} onNavigateToSection={handleNavigation} />
+        {isSearchOpen && <SearchDialog open onOpenChange={setIsSearchOpen} onNavigateToSection={handleNavigation} />}
       </div>
 
       {/* Overlay on top of the already-rendered page, so the content is in the HTML for search engines */}

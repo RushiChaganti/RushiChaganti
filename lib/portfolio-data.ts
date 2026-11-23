@@ -98,6 +98,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 3,
         title: "Multi_modal_Doc_QA_system",
+        archived: true,
         description:
           "Document QA system that accepts text and image inputs. Handles the tricky part of unifying embeddings across modalities for consistent retrieval.",
         tech: ["Python", "Multi-modal AI", "LLMs"],
@@ -166,7 +167,7 @@ export const portfolioData: PortfolioData = {
         id: 31,
         title: "11fps.com",
         featured: true,
-        image: "/shots/11fps.webp",
+        image: "/shots/11fps-v2.webp",
         description:
           "Website for an AI-native film studio: films, series, team pages and video streaming from Cloudflare R2. Designed and built at 11FPS.",
         tech: ["Next.js", "TypeScript", "Cloudflare R2"],
@@ -243,6 +244,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 18,
         title: "araise_Web",
+        archived: true,
         description: "Official Araise org website. I designed the component library and ensured consistent styling across all sub-project pages.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/Araise25/araise_Web",
@@ -282,6 +284,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 19,
         title: "WTF-Tools",
+        archived: true,
         description: "Shell scripts for common dev tasks (git shortcuts, env setup, cleanup). Designed to be sourced, not executed—minimal startup overhead.",
         tech: ["Shell", "Bash"],
         githubLink: "https://github.com/Araise25/WTF-Tools",
@@ -304,6 +307,7 @@ export const portfolioData: PortfolioData = {
       {
         id: 24,
         title: "Release-Check-DB",
+        archived: true,
         description: "Community-maintained JSON database of tech stack metadata. Powers Release-Check's validation logic; accepts PRs for new tools.",
         tech: ["Metadata", "JSON"],
         githubLink: "https://github.com/Araise25/Release-Check-DB",

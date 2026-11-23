@@ -1,10 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { Search, X, Briefcase, Code, Terminal, FileText, Command, Mail, Heart } from "lucide-react"
+import { Search, X, Briefcase, Code, Terminal, Mail, Heart } from "lucide-react"
 import { portfolioData } from "@/lib/portfolio-data"
 import { Build, WorkExperience } from "@/lib/types"
-import { useRouter } from "next/navigation"
 
 interface SearchDialogProps {
     open: boolean
@@ -26,10 +25,8 @@ type SearchResult =
 
 export function SearchDialog({ open, onOpenChange, onNavigateToSection }: SearchDialogProps) {
     const [query, setQuery] = React.useState("")
-    const [results, setResults] = React.useState<SearchResult[]>([])
     const [selectedIndex, setSelectedIndex] = React.useState(0)
     const inputRef = React.useRef<HTMLInputElement>(null)
-    const router = useRouter()
 
     React.useEffect(() => {
         if (open) {
@@ -37,18 +34,15 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
             document.body.style.overflow = 'hidden'
         } else {
             document.body.style.overflow = 'unset'
-            setQuery("")
         }
         return () => {
             document.body.style.overflow = 'unset'
         }
     }, [open])
 
-    React.useEffect(() => {
-        if (!query) {
-            setResults([])
-            return
-        }
+    // Derived from the query on each render, so no extra state or effect
+    const results = React.useMemo<SearchResult[]>(() => {
+        if (!query) return []
 
         const lowerQuery = query.toLowerCase().trim()
         const isOSSQuery = lowerQuery === 'oss'
@@ -111,9 +105,13 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
             })
         }
 
-        setResults(newResults)
-        setSelectedIndex(0)
+        return newResults
     }, [query])
+
+    const updateQuery = (value: string) => {
+        setQuery(value)
+        setSelectedIndex(0)
+    }
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'ArrowDown') {
@@ -167,7 +165,7 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                     <input
                         ref={inputRef}
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => updateQuery(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="Search projects, work, tech..."
                         className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground text-base"
@@ -239,7 +237,7 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
 
                 {query && results.length === 0 && (
                     <div className="p-12 text-center text-muted-foreground">
-                        <p>No results found for "{query}"</p>
+                        <p>No results found for &ldquo;{query}&rdquo;</p>
                     </div>
                 )}
 
@@ -251,11 +249,11 @@ export function SearchDialog({ open, onOpenChange, onNavigateToSection }: Search
                         <div className="flex flex-col items-center gap-3">
                             <div className="px-3 py-1.5 rounded-full bg-red-500/5 border border-red-500/10 active:scale-95 transition-transform cursor-default">
                                 <p className="text-[10px] sm:text-xs text-red-500/80 font-medium">
-                                    Hint: Search "OSS" to see all open source contributions
+                                    Hint: Search &ldquo;OSS&rdquo; to see all open source contributions
                                 </p>
                             </div>
                             <button
-                                onClick={() => setQuery("OSS")}
+                                onClick={() => updateQuery("OSS")}
                                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-muted hover:bg-accent hover:text-accent-foreground transition-all text-sm border border-border group"
                             >
                                 <Heart className="w-4 h-4 text-red-500 group-hover:fill-current transition-all" />

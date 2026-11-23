@@ -23,7 +23,6 @@ export function StartupAnimation({ onComplete }: { onComplete: () => void }) {
     // Play once per browser tab session; the inline script in layout.tsx hides it before first paint too
     try {
       if (sessionStorage.getItem(GREETED_KEY)) {
-        setIsVisible(false)
         onComplete()
         return
       }
