@@ -150,7 +150,6 @@ export const portfolioData: PortfolioData = {
       {
         id: 7,
         title: "lib_resume_builder_AIHawk",
-        archived: true,
         description:
           "Contributed Zip code functionality and fixed critical bugs that caused issues for multiple users.",
         tech: ["Python", "Resume Builder"],
@@ -324,7 +323,6 @@ export const portfolioData: PortfolioData = {
       {
         id: 15,
         title: "system-prompts-and-models-of-ai-tools",
-        archived: true,
         description:
           "Contributed the Augment Code system prompt to a community collection of extracted AI tool prompts. Part of ongoing AI security research.",
         tech: ["AI Prompt Injection", "AI Red Teaming"],
@@ -386,12 +384,13 @@ export const portfolioData: PortfolioData = {
   skills: [
     {
       group: "AI & LLMs",
+      featured: true,
       items: ["LLM apps", "RAG", "AI agents", "Prompt engineering", "Image & video generation", "Whisper", "Ollama", "LangChain", "Pinecone"],
     },
     { group: "ML & Vision", items: ["Scikit-learn", "YOLOv8", "OpenCV", "Dataset annotation"] },
     { group: "Languages", items: ["Python", "TypeScript", "JavaScript", "Bash"] },
     { group: "Web & Backend", items: ["Next.js", "React", "FastAPI", "Electron", "Supabase", "Cloudflare Workers", "Tailwind CSS"] },
     { group: "Automation", items: ["Playwright", "Selenium", "Browser agents", "Docker", "Linux"] },
-    { group: "Security", items: ["AI red teaming", "Prompt injection"] },
+    { group: "Security", learning: true, items: ["AI red teaming", "Prompt injection"] },
   ],
 };

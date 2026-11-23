@@ -1,14 +1,23 @@
 import type React from "react"
-import { Github, Linkedin, X, ExternalLink } from "lucide-react"
+import { Github, Linkedin, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { WorkSection } from "@/components/work-section"
+import { SkillsSection } from "@/components/skills-section"
 import { portfolioData } from "@/lib/portfolio-data"
+
+// X (Twitter) logo; lucide's X icon is a close cross
+function XLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+    </svg>
+  )
+}
 
 const SOCIAL_LINKS = [
   { href: portfolioData.links.github, label: "GitHub", Icon: Github },
   { href: portfolioData.links.linkedin, label: "LinkedIn", Icon: Linkedin },
-  { href: portfolioData.links.twitter, label: "X (Twitter)", Icon: X },
+  { href: portfolioData.links.twitter, label: "X (Twitter)", Icon: XLogo },
 ]
 
 function OutLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -72,26 +81,7 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Skills */}
-      <div className="space-y-4 sm:space-y-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground">Skills</h2>
-        <dl className="space-y-3">
-          {portfolioData.skills.map(({ group, items }) => (
-            <div key={group} className="flex flex-col sm:flex-row gap-1.5 sm:gap-4">
-              <dt className="sm:w-32 shrink-0 pt-0.5 font-mono text-[11px] sm:text-xs uppercase tracking-wider text-muted-foreground">
-                {group}
-              </dt>
-              <dd className="flex flex-wrap gap-1.5">
-                {items.map((item) => (
-                  <Badge key={item} variant="secondary" className="text-[11px] sm:text-xs font-normal">
-                    {item}
-                  </Badge>
-                ))}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
+      <SkillsSection />
 
       <WorkSection compact />
 

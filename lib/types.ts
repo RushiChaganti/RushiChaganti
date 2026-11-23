@@ -32,6 +32,8 @@ export interface Links {
 export interface SkillGroup {
   group: string;
   items: string[];
+  featured?: boolean; // core skills: full-width, highlighted
+  learning?: boolean; // still learning: full-width, dashed, "learning in progress" tag
 }
 
 export interface WorkExperience {
