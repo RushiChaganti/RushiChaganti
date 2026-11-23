@@ -1,5 +1,9 @@
 import { PortfolioData } from './types';
 
+// OSS links open the upstream repo's PR list filtered to my PRs, so visitors see only my contributions
+const myPRs = (repo: string, merged = true) =>
+  `https://github.com/${repo}/pulls?q=is%3Apr${merged ? "+is%3Amerged" : ""}+author%3ARushiChaganti`;
+
 export const portfolioData: PortfolioData = {
   work: [
     {
@@ -105,7 +109,7 @@ export const portfolioData: PortfolioData = {
         description:
           "Contributed data export functionality to LightRAG. PR merged—enables users to persist and migrate their RAG graphs.",
         tech: ["Python", "RAG", "LLMs"],
-        githubLink: "https://github.com/HKUDS/LightRAG",
+        githubLink: myPRs("HKUDS/LightRAG"),
         oss: true,
       },
       {
@@ -142,9 +146,9 @@ export const portfolioData: PortfolioData = {
         id: 6,
         title: "Auto_Jobs_Applier_AIHawk",
         description:
-          "Main repository using the resume builder library. I contribute as a community helper and integrated the Zip code functionality from the library.",
+          "AI job application agent. Merged zip code support for addresses (issue #407) and wrote the setup docs and README updates. Community helper.",
         tech: ["Python", "AI agent", "Automation"],
-        githubLink: "https://github.com/RushiChaganti/Auto_Jobs_Applier_AIHawk",
+        githubLink: myPRs("feder-cr/Jobs_Applier_AI_Agent"),
         oss: true,
       },
       {
@@ -153,7 +157,7 @@ export const portfolioData: PortfolioData = {
         description:
           "Contributed Zip code functionality and fixed critical bugs that caused issues for multiple users.",
         tech: ["Python", "Resume Builder"],
-        githubLink: "https://github.com/RushiChaganti/lib_resume_builder_AIHawk",
+        githubLink: myPRs("oss-invisible/selenium"),
         oss: true,
       },
     ],
@@ -291,6 +295,27 @@ export const portfolioData: PortfolioData = {
 
     ],
 
+    Linux: [
+      {
+        id: 29,
+        title: "Omarchy",
+        isNew: true,
+        description:
+          "Merged into the Omarchy Linux desktop: consistent filter shortcuts across six shell menus (Ctrl+Backspace deletes a word, Ctrl+U clears the field), matching Qt on KDE and GNOME.",
+        tech: ["QML", "Qt", "Linux"],
+        githubLink: myPRs("omacom/omarchy"),
+        oss: true,
+      },
+      {
+        id: 30,
+        title: "omarchy-ibm-theme",
+        description: "Added an exploded ThinkPad wallpaper and improved the README for this IBM / ThinkPad theme for Omarchy.",
+        tech: ["Theming", "Linux"],
+        githubLink: myPRs("DimaZbr/omarchy-ibm-theme"),
+        oss: true,
+      },
+    ],
+
     Extensions: [
       {
         id: 27,
@@ -324,9 +349,9 @@ export const portfolioData: PortfolioData = {
         id: 15,
         title: "system-prompts-and-models-of-ai-tools",
         description:
-          "Contributed the Augment Code system prompt to a community collection of extracted AI tool prompts. Part of ongoing AI security research.",
+          "Submitted the Augment Code system prompt to a community collection of extracted AI tool prompts (PR open). Part of ongoing AI security research.",
         tech: ["AI Prompt Injection", "AI Red Teaming"],
-        githubLink: "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools",
+        githubLink: myPRs("x1xhlol/system-prompts-and-models-of-ai-tools", false),
         oss: true,
       },
 

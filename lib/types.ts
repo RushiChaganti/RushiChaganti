@@ -57,6 +57,7 @@ export interface PortfolioData {
     Web: Build[];
     Python: Build[];
     Bash: Build[];
+    Linux: Build[];
     Extensions: Build[];
     Security: Build[];
   };
