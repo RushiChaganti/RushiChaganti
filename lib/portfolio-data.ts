@@ -406,16 +406,14 @@ export const portfolioData: PortfolioData = {
     anime: "https://myanimelist.net/animelist/RushiChaganti",
   },
   // Only skills backed by the work and builds listed above
-  skills: [
-    {
-      group: "AI & LLMs",
-      featured: true,
-      items: ["LLM apps", "RAG", "AI agents", "Prompt engineering", "Image & video generation", "Whisper", "Ollama", "LangChain", "Pinecone"],
-    },
-    { group: "ML & Vision", items: ["Scikit-learn", "YOLOv8", "OpenCV", "Dataset annotation"] },
-    { group: "Languages", items: ["Python", "TypeScript", "JavaScript", "Bash"] },
-    { group: "Web & Backend", items: ["Next.js", "React", "FastAPI", "Electron", "Supabase", "Cloudflare Workers", "Tailwind CSS"] },
-    { group: "Automation", items: ["Playwright", "Selenium", "Browser agents", "Docker", "Linux"] },
-    { group: "Security", learning: true, items: ["AI red teaming", "Prompt injection"] },
-  ],
+  skills: {
+    core: ["LLM apps", "RAG", "AI agents", "Image & video generation", "Python", "TypeScript", "Next.js", "FastAPI"],
+    also: [
+      "Prompt engineering", "Whisper", "Ollama", "LangChain", "Pinecone",
+      "YOLOv8", "OpenCV", "Scikit-learn",
+      "JavaScript", "Bash", "React", "Electron", "Supabase", "Cloudflare Workers", "Tailwind CSS",
+      "Playwright", "Selenium", "Docker", "Linux",
+    ],
+    learning: ["AI red teaming", "Prompt injection"],
+  },
 };

@@ -1,60 +1,61 @@
-import { Brain, Code, ScanEye, Server, ShieldCheck, Workflow, type LucideIcon } from "lucide-react"
+import type React from "react"
 import { portfolioData } from "@/lib/portfolio-data"
 
-const ICONS: Record<string, LucideIcon> = {
-  "AI & LLMs": Brain,
-  "ML & Vision": ScanEye,
-  Languages: Code,
-  "Web & Backend": Server,
-  Automation: Workflow,
-  Security: ShieldCheck,
+const { core, also, learning } = portfolioData.skills
+
+function TierLabel({ children }: { children: React.ReactNode }) {
+  return <h3 className="font-mono text-[11px] sm:text-xs uppercase tracking-wider text-muted-foreground">{children}</h3>
+}
+
+// Plain words separated by dots: lighter than chips for the long secondary lists
+function DotList({ items }: { items: string[] }) {
+  return (
+    <ul className="flex flex-wrap gap-y-1 text-sm text-muted-foreground leading-relaxed">
+      {items.map((item, i) => (
+        <li key={item} className="whitespace-nowrap">
+          {item}
+          {i < items.length - 1 && <span className="mx-2 text-border" aria-hidden>·</span>}
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 export function SkillsSection() {
   return (
     <div className="space-y-4 sm:space-y-6">
       <h2 className="text-xl sm:text-2xl font-bold text-foreground">Skills</h2>
-      <div className="grid gap-3 sm:grid-cols-2">
-        {portfolioData.skills.map(({ group, items, featured, learning }) => {
-          const Icon = ICONS[group] ?? Code
-          return (
-            <div
-              key={group}
-              className={`rounded-xl border p-4 transition-colors ${featured || learning ? "sm:col-span-2" : ""} ${learning
-                  ? "border-dashed border-border bg-transparent"
-                  : featured
-                    ? "border-primary/30 bg-primary/5"
-                    : "border-border/60 bg-card/50 hover:border-border"
-                }`}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <Icon className={`h-4 w-4 ${featured ? "text-primary" : "text-muted-foreground"}`} aria-hidden />
-                <h3 className="text-sm font-semibold text-foreground">{group}</h3>
-                {learning && (
-                  <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" aria-hidden />
-                    Learning in progress
-                  </span>
-                )}
-              </div>
-              <ul className="flex flex-wrap gap-1.5">
-                {items.map((item) => (
-                  <li
-                    key={item}
-                    className={`rounded-md px-2 py-1 text-xs ${learning
-                        ? "border border-dashed border-border text-muted-foreground"
-                        : featured
-                          ? "border border-primary/20 bg-primary/10 text-foreground"
-                          : "bg-secondary text-secondary-foreground"
-                      }`}
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        })}
+
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <TierLabel>Core</TierLabel>
+          <ul className="flex flex-wrap gap-2">
+            {core.map((item) => (
+              <li
+                key={item}
+                className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-foreground shadow-sm"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="space-y-2">
+          <TierLabel>Also work with</TierLabel>
+          <DotList items={also} />
+        </div>
+
+        <div className="space-y-2">
+          <TierLabel>
+            <span className="inline-flex items-center gap-2">
+              Learning
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" aria-hidden />
+              <span className="normal-case tracking-normal">in progress</span>
+            </span>
+          </TierLabel>
+          <DotList items={learning} />
+        </div>
       </div>
     </div>
   )

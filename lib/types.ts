@@ -29,11 +29,10 @@ export interface Links {
   anime: string;
 }
 
-export interface SkillGroup {
-  group: string;
-  items: string[];
-  featured?: boolean; // core skills: full-width, highlighted
-  learning?: boolean; // still learning: full-width, dashed, "learning in progress" tag
+export interface Skills {
+  core: string[]; // what I use daily; shown big
+  also: string[]; // used in real work or builds
+  learning: string[]; // in progress
 }
 
 export interface WorkExperience {
@@ -63,7 +62,7 @@ export interface PortfolioData {
   };
   logs: Log[];
   links: Links;
-  skills: SkillGroup[];
+  skills: Skills;
 }
 
 // GitHub API types
