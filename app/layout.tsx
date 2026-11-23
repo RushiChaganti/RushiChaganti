@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     images: ["/RushiChaganti/og.png"],
   },
   icons: {
-    icon: getAssetPath('/bat.png'),
-    shortcut: getAssetPath('/bat.png'),
-    apple: getAssetPath('/bat.png'),
+    icon: getAssetPath('/icon.png'),
+    shortcut: getAssetPath('/icon.png'),
+    apple: getAssetPath('/icon.png'),
   },
 }
 

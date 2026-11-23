@@ -42,8 +42,8 @@ export default function Home() {
         <div className="space-y-3 sm:space-y-4">
           <p className="text-muted-foreground text-sm sm:text-base">Hello, this is</p>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-            Rushi Chaganti<span className="text-muted-foreground text-sm sm:text-lg font-normal">(Yasha)</span>
-            <span className="text-muted-foreground">.</span>
+            Rushi Chaganti
+            <span className="ml-2 sm:ml-3 align-baseline text-base sm:text-xl lg:text-2xl font-normal text-muted-foreground">aka Yasha</span>
           </h1>
           <p className="text-lg sm:text-xl font-medium text-foreground">
             AI Engineer at{" "}

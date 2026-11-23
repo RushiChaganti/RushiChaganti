@@ -5,9 +5,52 @@ import { portfolioData } from "@/lib/portfolio-data"
 import { Build } from "@/lib/types"
 import { ExternalLink, Github, Heart } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { getAssetPath } from "@/lib/utils"
 
 const { lastUpdated, ...categories } = portfolioData.builds
 const archivedCount = Object.values(categories).flat().filter((b) => b.archived).length
+const featured = Object.values(categories).flat().filter((b) => b.featured)
+
+// Screenshot card for the few builds worth showing first
+function FeaturedCard({ build }: { build: Build }) {
+  const href = build.link || build.githubLink
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col overflow-hidden rounded-xl border border-border/60 bg-card hover:border-border hover:shadow-md transition"
+    >
+      {build.image && (
+        <div className="aspect-[16/10] overflow-hidden border-b border-border/60 bg-muted">
+          {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are unoptimized anyway */}
+          <img
+            src={getAssetPath(build.image)}
+            alt={`${build.title} screenshot`}
+            width={1200}
+            height={750}
+            loading="lazy"
+            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col gap-2 p-4">
+        <div className="flex items-center gap-1.5">
+          <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">{build.title}</h3>
+          <ExternalLink className="h-3 w-3 text-muted-foreground" />
+        </div>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{build.description}</p>
+        <div className="mt-auto flex flex-wrap gap-1 pt-1">
+          {build.tech.map((tech) => (
+            <Badge key={tech} variant="secondary" className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5">
+              {tech}
+            </Badge>
+          ))}
+        </div>
+      </div>
+    </a>
+  )
+}
 
 export function BuildsSection() {
   const [showArchived, setShowArchived] = useState(false)
@@ -20,8 +63,20 @@ export function BuildsSection() {
           Last updated: {lastUpdated}
         </p>
       </div>
+      <div className="space-y-4 sm:space-y-6">
+        <h2 className="text-base sm:text-lg font-semibold text-muted-foreground uppercase tracking-wide">Featured</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {featured.map((build) => (
+            <FeaturedCard key={build.id} build={build} />
+          ))}
+        </div>
+      </div>
+
+      <h2 className="text-base sm:text-lg font-semibold text-foreground pt-2 border-t border-border">Everything else</h2>
+
       {Object.entries(categories)
-        .map(([language, projects]) => [language, (projects as Build[]).filter((b) => showArchived || !b.archived)] as const)
+        // Featured builds are already shown above
+        .map(([language, projects]) => [language, (projects as Build[]).filter((b) => !b.featured && (showArchived || !b.archived))] as const)
         // Hide categories whose builds are all archived
         .filter(([, projects]) => projects.length > 0)
         .map(([language, projects]) => (

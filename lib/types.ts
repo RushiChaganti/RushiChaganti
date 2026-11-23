@@ -4,19 +4,15 @@ export interface Build {
   title: string;
   description: string;
   tech: string[];
-  githubLink: string;
+  githubLink?: string;
   link?: string;
   demo?: string;
   oss?: boolean;
   firefoxLink?: string;
   isNew?: boolean;
+  featured?: boolean; // shown with a screenshot at the top of the Builds page
+  image?: string; // screenshot under public/, used by featured builds
   archived?: boolean; // hidden on the Builds page until "show archived" is clicked
-}
-
-export interface Log {
-  date: string;
-  title: string;
-  content: string;
 }
 
 export interface Links {
@@ -60,27 +56,6 @@ export interface PortfolioData {
     Extensions: Build[];
     Security: Build[];
   };
-  logs: Log[];
   links: Links;
   skills: Skills;
-}
-
-// GitHub API types
-export interface GitHubEvent {
-  type: string;
-  repo: { name: string };
-  created_at: string;
-  payload: {
-    commits?: Array<{ message: string }>;
-  };
-}
-
-// Chess.com API types
-export interface ChessGame {
-  url: string;
-  time_control: string;
-  rated: boolean;
-  end_time: number;
-  white: { username: string; rating: number };
-  black: { username: string; rating: number };
 }

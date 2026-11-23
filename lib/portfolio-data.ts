@@ -163,8 +163,20 @@ export const portfolioData: PortfolioData = {
     ],
     Web: [
       {
+        id: 31,
+        title: "11fps.com",
+        featured: true,
+        image: "/shots/11fps.webp",
+        description:
+          "Website for an AI-native film studio: films, series, team pages and video streaming from Cloudflare R2. Designed and built at 11FPS.",
+        tech: ["Next.js", "TypeScript", "Cloudflare R2"],
+        link: "https://www.11fps.com/",
+      },
+      {
         id: 8,
         title: "BIOGROFE",
+        featured: true,
+        image: "/shots/biogrofe.webp",
         description:
           "Platform helping biotech students find job application details for 100+ companies. Built collaboratively; I owned the frontend and data aggregation.",
         tech: ["React", "Node.js"],
@@ -210,6 +222,8 @@ export const portfolioData: PortfolioData = {
       {
         id: 13,
         title: "NeuralSim",
+        featured: true,
+        image: "/shots/neuralsim.webp",
         description:
           "Interactive neural network simulator with real-time weight visualization. Users can adjust hyperparameters live and watch propagation animate.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
@@ -219,6 +233,8 @@ export const portfolioData: PortfolioData = {
       {
         id: 17,
         title: "Release-Check",
+        featured: true,
+        image: "/shots/release-check.webp",
         description: "Tool for validating tech stack compatibility and experience levels. Used internally by Araise to standardize project requirements.",
         tech: ["TypeScript", "Next.js", "Tailwind CSS"],
         githubLink: "https://github.com/Araise25/Release-Check",
@@ -357,44 +373,6 @@ export const portfolioData: PortfolioData = {
 
     ],
   },
-  logs: [
-    {
-      date: "2025-08-24",
-      title: "Building NeuralSim",
-      content:
-        "Created a modern website, Neural Networks through interactive, real-time simulations",
-    },
-    {
-      date: "2025-08-17",
-      title: "Building Biogrofe",
-      content:
-        "Created a modern  platform aiding students with job application details across 100+ companies.",
-    },
-    {
-      date: "2025-08-20",
-      title: "Building Personal Portfolio",
-      content:
-        "Created a modern portfolio website with Next.js, featuring dynamic logs, GitHub integration, and chess game tracking. Implemented responsive design with Tailwind CSS.",
-    },
-    {
-      date: "2025-08-15",
-      title: "Exploring AI Agent Development",
-      content:
-        "Deep diving into autonomous agent architectures and multi-modal AI systems. Working on improving reasoning capabilities and tool usage patterns.",
-    },
-    {
-      date: "2025-02-15",
-      title: "Automating Recruitment Workflows",
-      content:
-        "Built Selenium + Playwright agents to optimize Workday Careers and Workable platform pipelines, reducing manual effort drastically.",
-    },
-    {
-      date: "2025-01-10",
-      title: "Experimenting with RAG Pipelines",
-      content:
-        "Implemented Pinecone-backed data retrieval for multi-modal projects, ensuring faster semantic search performance.",
-    },
-  ],
   links: {
     cv: "https://drive.google.com/file/d/1VGysYKJ6cl8pm54SaTj6uOWDMMvy4tlH/view?usp=sharing",
     email: "mailto:rushichaganti@gmail.com",
