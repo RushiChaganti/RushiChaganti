@@ -25,6 +25,13 @@ export interface Links {
   github: string;
   linkedin: string;
   twitter: string;
+  chess: string;
+  anime: string;
+}
+
+export interface SkillGroup {
+  group: string;
+  items: string[];
 }
 
 export interface WorkExperience {
@@ -53,6 +60,7 @@ export interface PortfolioData {
   };
   logs: Log[];
   links: Links;
+  skills: SkillGroup[];
 }
 
 // GitHub API types

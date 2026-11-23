@@ -22,7 +22,59 @@ function Bullet({ text }: { text: string }) {
     )
 }
 
-export function WorkSection({ limit }: { limit?: number }) {
+function CompanyLogo({ company, logo, small }: { company: string; logo?: string; small?: boolean }) {
+    const box = small ? "w-8 h-8" : "w-10 h-10 sm:w-12 sm:h-12"
+    const img = small ? "w-5 h-5" : "w-6 h-6 sm:w-8 sm:h-8"
+    return (
+        <div className={`relative shrink-0 ${box} flex items-center justify-center rounded-lg bg-background border border-border overflow-hidden group-hover:border-primary/50 transition-colors`}>
+            {logo ? (
+                // eslint-disable-next-line @next/next/no-img-element -- static export, images are unoptimized anyway
+                <img src={getAssetPath(logo)} alt={`${company} logo`} width={32} height={32} loading="lazy" className={`${img} object-contain rounded`} />
+            ) : (
+                <span className={`font-bold text-foreground ${small ? "text-sm" : "text-lg"}`}>{company.charAt(0)}</span>
+            )}
+        </div>
+    )
+}
+
+// One line per job, for the home page. Details live on /work/.
+function CompactWorkList() {
+    return (
+        <div className="space-y-4 sm:space-y-6">
+            <div className="flex items-center justify-between">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground">Work</h2>
+                <Link href="/work/" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                    details
+                </Link>
+            </div>
+            <ul className="divide-y divide-border/60">
+                {portfolioData.work.map((exp) => (
+                    <li key={exp.id}>
+                        <Link href="/work/" className="group flex items-center gap-3 py-3">
+                            <CompanyLogo company={exp.company} logo={exp.logo} small />
+                            <div className="min-w-0 flex-1">
+                                <p className="text-sm sm:text-base font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                                    {exp.company}
+                                </p>
+                                <p className="text-xs sm:text-sm text-muted-foreground truncate">{exp.role}</p>
+                            </div>
+                            <p className="shrink-0 text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider whitespace-nowrap">
+                                {exp.period}
+                            </p>
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+export function WorkSection({ limit, compact }: { limit?: number; compact?: boolean }) {
+    if (compact) return <CompactWorkList />
+    return <FullWorkSection limit={limit} />
+}
+
+function FullWorkSection({ limit }: { limit?: number }) {
     const workData = limit ? portfolioData.work.slice(0, limit) : portfolioData.work
     const highlightedId = useHighlightedWork()
     const itemRefs = useRef<{ [key: number]: HTMLDivElement | null }>({})
@@ -76,23 +128,7 @@ export function WorkSection({ limit }: { limit?: number }) {
                         >
                             <div className="flex items-start justify-between gap-4 mb-4">
                                 <div className="flex items-center space-x-4 min-w-0">
-                                    <div className="relative shrink-0 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-background border border-border overflow-hidden group-hover:border-primary/50 transition-colors">
-                                        {exp.logo ? (
-                                            // eslint-disable-next-line @next/next/no-img-element -- static export, images are unoptimized anyway
-                                            <img
-                                                src={getAssetPath(exp.logo)}
-                                                alt={`${exp.company} logo`}
-                                                width={32}
-                                                height={32}
-                                                loading="lazy"
-                                                className="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded"
-                                            />
-                                        ) : (
-                                            <div className="flex items-center justify-center font-bold text-lg text-foreground">
-                                                {exp.company.charAt(0)}
-                                            </div>
-                                        )}
-                                    </div>
+                                    <CompanyLogo company={exp.company} logo={exp.logo} />
                                     <div className="min-w-0">
                                         <div className="flex items-center gap-1.5">
                                             <h3 className="font-bold text-foreground text-sm sm:text-base group-hover:text-primary transition-colors">

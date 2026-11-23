@@ -378,5 +378,20 @@ export const portfolioData: PortfolioData = {
     github: "https://github.com/RushiChaganti",
     linkedin: "https://www.linkedin.com/in/rushichaganti/",
     twitter: "https://x.com/Rushichaganti",
+    // Opens chess.com's "new game" screen with me as the opponent
+    chess: "https://www.chess.com/play/online/new?opponent=rushichaganti",
+    anime: "https://myanimelist.net/animelist/RushiChaganti",
   },
+  // Only skills backed by the work and builds listed above
+  skills: [
+    {
+      group: "AI & LLMs",
+      items: ["LLM apps", "RAG", "AI agents", "Prompt engineering", "Image & video generation", "Whisper", "Ollama", "LangChain", "Pinecone"],
+    },
+    { group: "ML & Vision", items: ["Scikit-learn", "YOLOv8", "OpenCV", "Dataset annotation"] },
+    { group: "Languages", items: ["Python", "TypeScript", "JavaScript", "Bash"] },
+    { group: "Web & Backend", items: ["Next.js", "React", "FastAPI", "Electron", "Supabase", "Cloudflare Workers", "Tailwind CSS"] },
+    { group: "Automation", items: ["Playwright", "Selenium", "Browser agents", "Docker", "Linux"] },
+    { group: "Security", items: ["AI red teaming", "Prompt injection"] },
+  ],
 };
